@@ -14,9 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
-      description: {
-        type: DataTypes.TEXT,
-      },
       exchange: {
         type: DataTypes.STRING,
       },
@@ -34,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
 
   StockModel.associate = (models) => {
     StockModel.hasMany(models.StockTransactionModel, {
+      onDelete: "cascade",
+    });
+
+    StockModel.hasMany(models.WatchlistModel, {
       onDelete: "cascade",
     });
   };
