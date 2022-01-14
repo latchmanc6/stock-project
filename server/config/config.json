@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "stock_test_project",
+    "database": "stock_trading",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
