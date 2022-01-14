@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const app = express();
 const db = require("./models");
 const { StockModel } = require("./models");
@@ -41,7 +40,7 @@ app.get("/api/getAllStocks", (req, res) => {
     });
 });
 
-// Gets all stocks from Finnhub API and adds a new row in the DB for each one.
+// Update stock information if needed.
 app.get("/api/getStockInfo", async (req, res) => {
   const stockTicker = req.body;
   const stock = await StockModel.findOne({ where: { ticker: stockTicker } });
@@ -51,16 +50,16 @@ app.get("/api/getStockInfo", async (req, res) => {
   // Add basic stock information if it doesn't already exist in the database
   if (stock.logo === null) {
     fetch(
-      "https://finnhub.io/api/v1/stock/profile2?symbol=" +
+      "https://finnhub.io/api/v1/stock/profile?symbol=" +
         stockTicker +
         "&token=" +
-        FinnhubSandboxAPIKey
+        FinnhubAPIKey
     )
       .then((response) => response.json())
       .then(async (data) => {
         await StockModel.update(
           {
-            description: data.description,
+            companyName: data.name,
             exchange: data.exchange,
             sector: data.finnhubIndustry,
             logo: data.logo,
@@ -76,13 +75,16 @@ app.get("/api/getStockInfo", async (req, res) => {
 
   // Update latest stock price
   fetch(
-    "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=" + FinnhubAPIKey
+    "https://finnhub.io/api/v1/quote?symbol=" +
+      stockTicker +
+      "&token=" +
+      FinnhubAPIKey
   )
     .then((response) => response.json())
     .then(async (data) => {
       await StockModel.update(
         {
-          description: data.description,
+          currentPrice: data.c,
         },
         { where: { ticker: stockTicker } }
       );
