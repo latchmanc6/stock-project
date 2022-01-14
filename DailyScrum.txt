@@ -13,7 +13,7 @@ Nari
 
 Chris
 1. Done / not done since the last scrum:
-- Finished porject proposal
+- Finished project proposal
 - Set up git / project base
 2. To do until the next Scrum:
 - Work on the stock api
