@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(12, 2),
       },
       address: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING(300),
       },
       postalCode: {
         type: DataTypes.STRING(6),
