@@ -1,13 +1,19 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes, NavLink } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  NavLink,
+} from "react-router-dom";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
+import { Box } from "@mui/system";
 import axios from "axios";
 
 import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { Box } from "@mui/system";
+import { Button, Typography } from "@mui/material";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -34,10 +40,16 @@ function App() {
       });
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({ email: "", id: 0, status: false });
+  };
+
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
+          {/* navbar */}
           <Box>
             {!authState.status ? (
               <>
@@ -51,7 +63,15 @@ function App() {
               </>
             )}
           </Box>
-            
+          <Box className="loggedInContainer">
+            <Typography>{authState.email}</Typography>
+            {authState.status && (
+              <Button variant="contained" onClick={logout}>
+                Log out
+              </Button>
+            )}
+          </Box>
+
           <Routes>
             <Route path="/trade/:ticker" element={<Trade />} />
             <Route path="/register" element={<Register />} />
