@@ -9,6 +9,8 @@ app.use(cors());
 // Routers
 const stockRouter = require("./routes/stockRoute");
 app.use("/api/stock", stockRouter);
+const usersRouter = require("./routes/Users");
+app.use("/auth", usersRouter);
 
 // Start server.
 db.sequelize.sync().then(() => {
