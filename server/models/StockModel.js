@@ -14,6 +14,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
+      high52Week: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      high52WeekDate: {
+        type: DataTypes.DATE,
+      },
+      low52Week: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      low52WeekDate: {
+        type: DataTypes.DATE,
+      },
+      peRatio: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      dividendPerShareAnnual: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
       exchange: {
         type: DataTypes.STRING,
       },

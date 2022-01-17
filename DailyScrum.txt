@@ -1,3 +1,22 @@
+Nari
+1. Done / not done since the last scrum:
+- user register
+- user login & logout 
+2. To do until the next Scrum:
+- finish the react part on above
+3. Need assistance/figure things out
+- Nothing for now
+
+Chris
+1. Done / not done since the last scrum:
+- Finished stock API for the time being
+- Started and finished chart implementation for an individual stock
+2. To do until the next Scrum:
+- Make improvements to the chart component (styles and otherwise)
+- To be determined 
+3. Need assistance/figure things out
+- Nothing for now
+
 -----------------------------------------------
 01/14/21
 
@@ -13,7 +32,7 @@ Nari
 
 Chris
 1. Done / not done since the last scrum:
-- Finished porject proposal
+- Finished project proposal
 - Set up git / project base
 2. To do until the next Scrum:
 - Work on the stock api
