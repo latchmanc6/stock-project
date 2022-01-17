@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Grid, Container, Typography, Button, TextField } from "@mui/material";
-
+import { AuthContext } from "../helpers/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setAuthState } = useContext(AuthContext);
 
   let navigate = useNavigate();
 
@@ -20,8 +21,11 @@ function Login() {
 
       } else {
         localStorage.setItem("accessToken", response.data.token);
-        
-        console.log("success");
+        setAuthState({
+          email: response.data.email,
+          id: response.data.id,
+          status: true,
+        });
         // navigate("/");
       }
     });
