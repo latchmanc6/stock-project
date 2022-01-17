@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const FinnhubAPIKey = process.env.FINNHUB_API_KEY;
 const FinnhubSandboxAPIKey = process.env.FINNHUB_SANDBOX_API_KEY;
+const AlphaVantageAPIKey = process.env.ALPHA_VANTAGE_API_KEY;
 
 // Gets all stocks from Finnhub API and adds a new row in the DB for each one. ** THIS IS ONLY TO FILL THE DATABASE WITH BASIC INFORMATION **
 router.get("/getAllStocks", (req, res) => {
@@ -22,7 +23,7 @@ router.get("/getAllStocks", (req, res) => {
           currentPrice: 0.0,
         });
       });
-      res.json({ success: data });
+      res.json(data);
     })
     .catch((err) => {
       res.json({ error: err });
@@ -118,7 +119,7 @@ router.get("/getStockInfo", async (req, res) => {
 
 // Update the stock price at the time of purchase, no time restriction.
 router.get("/updateStockPrice", async (req, res) => {
-  const stockTicker = req.body;
+  const stockTicker = req.body.ticker;
   fetch(
     "https://finnhub.io/api/v1/quote?symbol=" +
       stockTicker +
@@ -133,9 +134,28 @@ router.get("/updateStockPrice", async (req, res) => {
         },
         { where: { ticker: stockTicker } }
       );
-      res.json({ success: data });
+      res.json(data);
     })
     .catch((err) => {
+      res.json({ error: err });
+    });
+});
+
+// Get stock chart data.
+router.get("/getStockChartData/:ticker", async (req, res) => {
+  const stockTicker = req.params.ticker;
+  fetch(
+    "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
+      stockTicker +
+      "&outputsize=full&apikey=" +
+      AlphaVantageAPIKey
+  )
+    .then((response) => response.json())
+    .then(async (data) => {
+      res.json(data["Time Series (Daily)"]);
+    })
+    .catch((err) => {
+      console.log(err);
       res.json({ error: err });
     });
 });
