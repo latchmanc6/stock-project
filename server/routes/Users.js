@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
   });
 
   if (!user) {
-    res.json({ error: "User doesn't exist" });
+    res.json({ error: "Email doesn't exist" });
     return;
   }
 
