@@ -9,7 +9,7 @@ app.use(cors());
 // Routers
 const stockRouter = require("./routes/stockRoute");
 app.use("/api/stock", stockRouter);
-const usersRouter = require("./routes/Users");
+const usersRouter = require("./routes/usersRoute");
 app.use("/auth", usersRouter);
 
 // Start server.

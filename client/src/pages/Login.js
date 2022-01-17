@@ -26,7 +26,7 @@ function Login() {
           id: response.data.id,
           status: true,
         });
-        // navigate("/");
+        navigate("/");
       }
     });
   };
