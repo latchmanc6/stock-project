@@ -8,12 +8,21 @@ import {
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/system";
+import { Button, Typography } from "@mui/material";
 import axios from "axios";
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
 
 import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { Button, Typography } from "@mui/material";
+import AddFundForm from "./components/Stripe/AddFundForm";
+
+// import Navbar from "./components/Navbar";
+
+// Make sure to call `loadStripe` outside of a component's render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe('pk_test_A7jK4iCYHL045qgjjfzAfPxu');
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -47,8 +56,14 @@ function App() {
 
   return (
     <div className="App">
+      
+      <Elements stripe={stripePromise}>
+        <AddFundForm />
+      </Elements>
+
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
+          {/* <Navbar /> */}
           {/* navbar */}
           <Box>
             {!authState.status ? (

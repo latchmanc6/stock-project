@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { Grid, Container, Typography, Button } from "@mui/material";
-import Textfield from "./components/FormsUI/Textfield";
+import Textfield from "../components/FormsUI/Textfield";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
