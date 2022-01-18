@@ -19,6 +19,7 @@
     "node-fetch": "^2.6.6",
     "nodemon": "^2.0.15",
     "sequelize": "^6.12.5",
-    "sequelize-cli": "^6.3.0"
+    "sequelize-cli": "^6.3.0",
+    "stripe": "^8.197.0"
   }
 }
