@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import StockChart from "./components/StockChart";
+import StockChart from "../components/StockChart";
 import moment from "moment";
-import SearchBar from "./components/SearchBar";
+import SearchBar from "../components/SearchBar";
 
 function Trade() {
   let { ticker } = useParams();
