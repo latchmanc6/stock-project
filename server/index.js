@@ -11,6 +11,8 @@ const stockRouter = require("./routes/stockRoute");
 app.use("/api/stock", stockRouter);
 const usersRouter = require("./routes/usersRoute");
 app.use("/auth", usersRouter);
+const fundsRouter = require("./routes/fundsRoute");
+app.use("/funds", fundsRouter);
 
 // Start server.
 db.sequelize.sync().then(() => {

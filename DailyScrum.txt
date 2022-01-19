@@ -1,3 +1,27 @@
+-----------------------------------------------
+01/19/21
+
+Nari
+1. Done / not done since the last scrum:
+- created navbar
+- created modal
+- design the navbar using react bootstrap
+2. To do until the next Scrum:
+- finish navbar
+- start user portfolio
+3. Need assistance/figure things out
+- Nothing for now
+
+Chris
+1. Done / not done since the last scrum:
+- Finished search bar
+- Fixed some small bugs in the trade page and optimized chart data load slightly 
+2. To do until the next Scrum:
+- Buy/Sell functionality possibly?
+3. Need assistance/figure things out
+- Nothing for now
+
+-----------------------------------------------
 01/18/21
 
 Nari
@@ -13,6 +37,10 @@ Nari
 
 Chris
 1. Done / not done since the last scrum:
+- Added buttons to load chart data from different times
+2. To do until the next Scrum:
+- Continue working on the Trade page + design
+- Figure out how to load all available data (not data that doesn't exist)
 - Slightly improved the usage of the chart data
 - Almost finished general design of the trade page
 - Started search bar
@@ -23,6 +51,27 @@ Chris
 - Nothing for now
 
 -----------------------------------------------
+01/17/21
+
+Nari
+1. Done / not done since the last scrum:
+- formik and material UI configuration 
+- created navbar
+- working on stripe payments 
+2. To do until the next Scrum:
+- finish adding funds
+
+Chris
+1. Done / not done since the last scrum:
+- Added buttons to load chart data from different times
+2. To do until the next Scrum:
+- Continue working on the Trade page + design
+- Figure out how to load all available data (not data that doesn't exist)
+3. Need assistance/figure things out
+- Nothing for now
+
+-----------------------------------------------
+01/16/21
 
 Nari
 1. Done / not done since the last scrum:
