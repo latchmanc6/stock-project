@@ -7,8 +7,6 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
-import { Box } from "@mui/system";
-import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
@@ -16,9 +14,10 @@ import {loadStripe} from '@stripe/stripe-js';
 import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import AddFundForm from "./components/Stripe/AddFundForm";
 
-// import Navbar from "./components/Navbar";
+import AddFundForm from "./components/Stripe/AddFundForm";
+import TopNavbar from "./components/TopNavbar";
+
 
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
@@ -56,16 +55,15 @@ function App() {
 
   return (
     <div className="App">
-      
-      <Elements stripe={stripePromise}>
+      {/* <Elements stripe={stripePromise}>
         <AddFundForm />
-      </Elements>
+      </Elements> */}
 
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
-          {/* <Navbar /> */}
-          {/* navbar */}
-          <Box>
+
+          <TopNavbar />
+          {/* <div>
             {!authState.status ? (
               <>
                 <NavLink to="/login">Login</NavLink>
@@ -77,15 +75,14 @@ function App() {
                 <NavLink to="#"> | Profile</NavLink>
               </>
             )}
-          </Box>
-          <Box className="loggedInContainer">
-            <Typography>{authState.email}</Typography>
+          </div> */}
+            
+            {/* <Typography>{authState.email}</Typography>
             {authState.status && (
               <Button variant="contained" onClick={logout}>
                 Log out
               </Button>
-            )}
-          </Box>
+            )} */}
 
           <Routes>
             <Route path="/trade/:ticker" element={<Trade />} />
