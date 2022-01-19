@@ -61,7 +61,7 @@ const FundModal = (props) => {
       </Modal.Header>
 
       <Modal.Body>
-        <p></p>
+
         <Form onSubmit={handleSubmit}>
 
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -76,11 +76,13 @@ const FundModal = (props) => {
             <CardSection />
           </Form.Group>
           <Modal.Footer>
-            <Button variant="primary" disabled={!stripe}>
+            <Button variant="primary" disabled={!stripe} type="submit">
               Confirm deposit
             </Button>
           </Modal.Footer>
+
         </Form>
+
       </Modal.Body>
     </Modal>
   );
