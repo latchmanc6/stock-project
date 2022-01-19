@@ -1,3 +1,29 @@
+01/18/21
+
+Nari
+1. Done / not done since the last scrum:
+- Stripe implementation 
+- create add funds route
+- creating navbar using material ui
+2. To do until the next Scrum:
+- finish navbar
+- add modal for add fund
+3. Need assistance/figure things out
+- Nothing for now
+
+Chris
+1. Done / not done since the last scrum:
+- Slightly improved the usage of the chart data
+- Almost finished general design of the trade page
+- Started search bar
+2. To do until the next Scrum:
+- Finish search bar
+- Figure out what to start next
+3. Need assistance/figure things out
+- Nothing for now
+
+-----------------------------------------------
+
 Nari
 1. Done / not done since the last scrum:
 - user register
