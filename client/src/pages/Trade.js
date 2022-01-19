@@ -47,8 +47,8 @@ function Trade() {
       </div>
       <div>
         <h2>${stockData.currentPrice}</h2>
-        <button className="btn">Buy</button>
-        <button className="btn">Sell</button>
+        <button className="btn btn-primary">Buy</button>
+        <button className="btn btn-danger">Sell</button>
       </div>
       <StockChart></StockChart>
       <h2>Key Statistics</h2>
