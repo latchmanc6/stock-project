@@ -42,8 +42,13 @@ function Trade() {
         <h1 className="stockHeaderTicker">{stockData.ticker}</h1>
       </div>
       <div>
-        <h1>{stockData.exchange}</h1>
-        <h1>{stockData.sector}</h1>
+        <p>{stockData.exchange}</p>
+        <p>{stockData.sector}</p>
+      </div>
+      <div>
+        <h2>${stockData.currentPrice}</h2>
+        <button className="btn">Buy</button>
+        <button className="btn">Sell</button>
       </div>
       <StockChart></StockChart>
       <h2>Key Statistics</h2>
