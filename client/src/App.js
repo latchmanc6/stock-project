@@ -8,20 +8,18 @@ import {
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
+// import { Elements } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 
 import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
-import AddFundForm from "./components/Stripe/AddFundForm";
 import TopNavbar from "./components/TopNavbar";
 
-
-// Make sure to call `loadStripe` outside of a component's render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_A7jK4iCYHL045qgjjfzAfPxu');
+// // Make sure to call `loadStripe` outside of a component's render to avoid
+// // recreating the `Stripe` object on every render.
+// const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -61,7 +59,6 @@ function App() {
 
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
-
           <TopNavbar />
           {/* <div>
             {!authState.status ? (
@@ -76,8 +73,8 @@ function App() {
               </>
             )}
           </div> */}
-            
-            {/* <Typography>{authState.email}</Typography>
+
+          {/* <Typography>{authState.email}</Typography>
             {authState.status && (
               <Button variant="contained" onClick={logout}>
                 Log out
