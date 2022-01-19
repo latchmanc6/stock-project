@@ -1,7 +1,10 @@
 import React from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import Modal from "react-bootstrap/Modal";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 import CardSection from "./Stripe/CardSection";
 
@@ -52,26 +55,35 @@ const FundModal = (props) => {
   };
 
   return (
-    <Modal show={props.showModal} onHide={props.handleModalClose}>
+    <Modal centered show={props.showModal} onHide={props.handleModalClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal title</Modal.Title>
+        <Modal.Title>Add funds</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p>Modal body text goes here.</p>
-        <form onSubmit={handleSubmit}>
-          <CardSection />
-          <button disabled={!stripe}>Confirm order</button>
-        </form>
-      </Modal.Body>
+        <p></p>
+        <Form onSubmit={handleSubmit}>
 
-      <Modal.Footer>
-        <Button variant="secondary">Close</Button>
-        <Button variant="primary">Save changes</Button>
-      </Modal.Footer>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Amount to deposit</Form.Label>
+            <InputGroup className="mb-3">
+              <InputGroup.Text>$</InputGroup.Text>
+              <FormControl aria-label="Amount (to the nearest dollar)" />
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <CardSection />
+          </Form.Group>
+          <Modal.Footer>
+            <Button variant="primary" disabled={!stripe}>
+              Confirm deposit
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal.Body>
     </Modal>
   );
-}
-
+};
 
 export default FundModal;
