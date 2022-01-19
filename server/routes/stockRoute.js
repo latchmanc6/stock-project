@@ -10,7 +10,7 @@ const FinnhubSandboxAPIKey = process.env.FINNHUB_SANDBOX_API_KEY;
 const AlphaVantageAPIKey = process.env.ALPHA_VANTAGE_API_KEY;
 
 // Gets all stocks from Finnhub API and adds a new row in the DB for each one. ** THIS IS ONLY TO FILL THE DATABASE WITH BASIC INFORMATION **
-router.get("/getAllStocks", (req, res) => {
+router.get("/addAllStocksToDB", (req, res) => {
   fetch(
     "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=" + FinnhubAPIKey
   )
@@ -31,8 +31,8 @@ router.get("/getAllStocks", (req, res) => {
 });
 
 // Update stock information if neeeded, called everytime user accesses stock trade.
-router.get("/getStockInfo", async (req, res) => {
-  const stockTicker = req.body.ticker;
+router.get("/getStockInfo/:ticker", async (req, res) => {
+  const stockTicker = req.params.ticker;
   const stock = await StockModel.findOne({ where: { ticker: stockTicker } });
   const THREE_MIN = 3 * 60 * 1000;
   const success = [];
@@ -114,7 +114,8 @@ router.get("/getStockInfo", async (req, res) => {
         error.push({ ErrorBasicFinanceData: err });
       });
   }
-  res.json({ success: success, error: error });
+  const updatedStock = await StockModel.findOne({ where: { ticker: stockTicker } });
+  res.json(updatedStock);
 });
 
 // Update the stock price at the time of purchase, no time restriction.
@@ -158,6 +159,13 @@ router.get("/getStockChartData/:ticker", async (req, res) => {
       console.log(err);
       res.json({ error: err });
     });
+});
+
+// Gets all stocks from DB.
+router.get("/getAllStocks", async (req, res) => {
+  const allStocks = await StockModel.findAll();
+
+  res.json(allStocks);
 });
 
 module.exports = router;
