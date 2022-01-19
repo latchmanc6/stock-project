@@ -72,7 +72,7 @@ function StockChart() {
             data.push(stockChartData[key]["2. high"]);
             counter++;
           } else {
-            return data.reverse();
+            return data;
           }
         });
       }
@@ -94,7 +94,7 @@ function StockChart() {
             data.push(key);
             counter++;
           } else {
-            return data.reverse();
+            return data;
           }
         });
       }
