@@ -10,7 +10,7 @@ const FinnhubSandboxAPIKey = process.env.FINNHUB_SANDBOX_API_KEY;
 const AlphaVantageAPIKey = process.env.ALPHA_VANTAGE_API_KEY;
 
 // Gets all stocks from Finnhub API and adds a new row in the DB for each one. ** THIS IS ONLY TO FILL THE DATABASE WITH BASIC INFORMATION **
-router.get("/getAllStocks", (req, res) => {
+router.get("/addAllStocksToDB", (req, res) => {
   fetch(
     "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=" + FinnhubAPIKey
   )
@@ -159,6 +159,13 @@ router.get("/getStockChartData/:ticker", async (req, res) => {
       console.log(err);
       res.json({ error: err });
     });
+});
+
+// Gets all stocks from DB.
+router.get("/getAllStocks", async (req, res) => {
+  const allStocks = await StockModel.findAll();
+
+  res.json(allStocks);
 });
 
 module.exports = router;
