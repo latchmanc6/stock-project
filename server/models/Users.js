@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       cash: {
         type: DataTypes.DECIMAL(12, 2),
+        allowNull: false,
+        defaultValue: '0'
       },
       address: {
         type: DataTypes.STRING(300),

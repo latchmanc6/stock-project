@@ -81,6 +81,7 @@ const FundModal = (props) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
+            <Form.Label>Card detail</Form.Label>
             <CardElement />
           </Form.Group>
 

@@ -12,6 +12,8 @@ import FundModal from "./FundModal";
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
+// const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
+
 
 const TopNavbar = () => {
   const [showModal, setModalShow] = useState(false);
