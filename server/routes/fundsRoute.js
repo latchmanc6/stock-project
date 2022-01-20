@@ -2,21 +2,32 @@ const express = require("express");
 const router = express.Router();
 
 require("dotenv").config();
-const STRIPE_SECRET = process.env.STRIPE_TEST_SECRET_KEY;
-const stripe = require("stripe")(STRIPE_SECRET);
+const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 
 router.post("/add", async (req, res) => {
-  // for the test environment, we have to use 'tok_visa' instead of the actual token
-  // const { token } = req.body;
+  const { amount } = req.body;
 
-  const charge = await stripe.charges.create({
-    amount: 2000,
+  const params = {
+    amount: amount * 100,
     currency: "usd",
     source: "tok_visa",
-    description: "My First Test Charge (created for API docs)",
-  });
+    description: "Deposit money",
+  };
 
-  res.json("success");
+  try {
+    const charge = await stripe.charges.create(params);
+
+    res.send({
+      status: charge.status,
+    });
+  } catch (error) {
+    return res.status(400).send({
+      error: {
+        message: e.message,
+      },
+      status: charge.status,
+    });
+  }
 });
 
 module.exports = router;
