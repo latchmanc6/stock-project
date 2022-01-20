@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Users, FundTransactions } = require("../models");
+const { FundTransactions } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 require("dotenv").config();
@@ -18,11 +18,21 @@ router.post("/add", validateToken, async (req, res) => {
 
   try {
     const charge = await stripe.charges.create(params);
+    console.log(charge);
 
-    res.send({
-      status: charge.status,
-    });
+    const newDeposit = {
+      type: "deposit",
+      total: charge.amount / 100,
+      chargeId: charge.id,
+      UserId: req.user.id,
+    };
+
+    await FundTransactions.create(newDeposit);
+
+    res.send({ status: charge.status });
+
   } catch (error) {
+
     return res.status(400).send({
       error: {
         message: e.message,
