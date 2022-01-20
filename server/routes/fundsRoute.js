@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const { Users, FundTransactions } = require("../models");
+const { validateToken } = require("../middlewares/AuthMiddleware");
 
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 
-router.post("/add", async (req, res) => {
+router.post("/add", validateToken, async (req, res) => {
   const { amount } = req.body;
 
   const params = {
@@ -28,8 +30,6 @@ router.post("/add", async (req, res) => {
       status: charge.status,
     });
   }
-
-  
 });
 
 module.exports = router;

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
 
 import Modal from "react-bootstrap/Modal";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -8,9 +10,18 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 const FundModal = (props) => {
+  const { authState } = useContext(AuthContext);
+  const [amount, setAmount] = useState("");
+  let navigate = useNavigate();
+
   const stripe = useStripe();
   const elements = useElements();
-  const [amount, setAmount] = useState("");
+
+  useEffect(() => {
+    if (!authState.status) {
+      navigate("/login");
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,6 +54,7 @@ const FundModal = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        accessToken: localStorage.getItem("accessToken")
       },
       body: JSON.stringify(paymentData),
     });
