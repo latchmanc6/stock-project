@@ -3,23 +3,16 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  NavLink,
 } from "react-router-dom";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { Elements } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
 
 import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
 import TopNavbar from "./components/TopNavbar";
-
-// // Make sure to call `loadStripe` outside of a component's render to avoid
-// // recreating the `Stripe` object on every render.
-// const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -53,39 +46,18 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Elements stripe={stripePromise}>
-        <AddFundForm />
-      </Elements> */}
 
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
-          <TopNavbar />
-          {/* <div>
-            {!authState.status ? (
-              <>
-                <NavLink to="/login">Login</NavLink>
-                <NavLink to="/register"> | Register</NavLink>
-              </>
-            ) : (
-              <>
-                <NavLink to="#">Home</NavLink>
-                <NavLink to="#"> | Profile</NavLink>
-              </>
-            )}
-          </div> */}
 
-          {/* <Typography>{authState.email}</Typography>
-            {authState.status && (
-              <Button variant="contained" onClick={logout}>
-                Log out
-              </Button>
-            )} */}
+          <TopNavbar authState={authState} logout={logout} />
 
           <Routes>
             <Route path="/trade/:ticker" element={<Trade />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
           </Routes>
+
         </Router>
       </AuthContext.Provider>
     </div>
