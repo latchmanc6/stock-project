@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      stripeToken: {
+      chargeId: {
         type: DataTypes.STRING,
       },
     },
