@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const FundTransactionModel = sequelize.define(
-    "FundTransactionModel",
+  const FundTransactions = sequelize.define(
+    "FundTransactions",
     {
       type: {
         type: DataTypes.ENUM("deposit", "withdraw"),
@@ -18,5 +18,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "fund_transactions",
     }
   );
-  return FundTransactionModel;
+  return FundTransactions;
 };

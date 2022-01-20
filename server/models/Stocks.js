@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const StockModel = sequelize.define(
-    "StockModel",
+  const Stocks = sequelize.define(
+    "Stocks",
     {
       ticker: {
         type: DataTypes.STRING,
@@ -47,15 +47,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  StockModel.associate = (models) => {
-    StockModel.hasMany(models.StockTransactionModel, {
+  Stocks.associate = (models) => {
+    Stocks.hasMany(models.StockTransactions, {
       onDelete: "cascade",
     });
 
-    StockModel.hasMany(models.WatchlistModel, {
+    Stocks.hasMany(models.Watchlists, {
       onDelete: "cascade",
     });
   };
 
-  return StockModel;
+  return Stocks;
 };

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const StockTransactionModel = sequelize.define(
-    "StockTransactionModel",
+  const StockTransactions = sequelize.define(
+    "StockTransactions",
     {
       ticker: {
         type: DataTypes.STRING,
@@ -24,5 +24,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "stock_transactions",
     }
   );
-  return StockTransactionModel;
+  return StockTransactions;
 };

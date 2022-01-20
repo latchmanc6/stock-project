@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { UsersModel } = require("../models");
+const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middlewares/AuthMiddleware");
@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
   const { email, password } = req.body;
 
   bcrypt.hash(password, 10).then((hash) => {
-    UsersModel.create({
+    Users.create({
       email,
       password: hash,
     });
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await UsersModel.findOne({
+  const user = await Users.findOne({
     where: { email },
   });
 

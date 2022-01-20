@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { StockModel } = require("../models");
+const { Stocks } = require("../models");
 const fetch = require("node-fetch");
 
 require("dotenv").config();
@@ -17,7 +17,7 @@ router.get("/addAllStocksToDB", (req, res) => {
     .then((response) => response.json())
     .then((data) => {
       data.forEach(async (item) => {
-        await StockModel.create({
+        await Stocks.create({
           ticker: item.symbol,
           companyName: item.description,
           currentPrice: 0.0,
@@ -33,7 +33,7 @@ router.get("/addAllStocksToDB", (req, res) => {
 // Update stock information if neeeded, called everytime user accesses stock trade.
 router.get("/getStockInfo/:ticker", async (req, res) => {
   const stockTicker = req.params.ticker;
-  const stock = await StockModel.findOne({ where: { ticker: stockTicker } });
+  const stock = await Stocks.findOne({ where: { ticker: stockTicker } });
   const THREE_MIN = 3 * 60 * 1000;
   const success = [];
   const error = [];
@@ -48,7 +48,7 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
     )
       .then((response) => response.json())
       .then(async (data) => {
-        await StockModel.update(
+        await Stocks.update(
           {
             companyName: data.name,
             exchange: data.exchange,
@@ -74,7 +74,7 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
     )
       .then((response) => response.json())
       .then(async (data) => {
-        await StockModel.update(
+        await Stocks.update(
           {
             currentPrice: data.c,
           },
@@ -97,7 +97,7 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
     )
       .then((response) => response.json())
       .then(async (data) => {
-        await StockModel.update(
+        await Stocks.update(
           {
             high52Week: data.metric["52WeekHigh"],
             high52WeekDate: data.metric["52WeekHighDate"],
@@ -114,7 +114,7 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
         error.push({ ErrorBasicFinanceData: err });
       });
   }
-  const updatedStock = await StockModel.findOne({ where: { ticker: stockTicker } });
+  const updatedStock = await Stocks.findOne({ where: { ticker: stockTicker } });
   res.json(updatedStock);
 });
 
@@ -129,7 +129,7 @@ router.get("/updateStockPrice", async (req, res) => {
   )
     .then((response) => response.json())
     .then(async (data) => {
-      await StockModel.update(
+      await Stocks.update(
         {
           currentPrice: data.c,
         },
@@ -163,7 +163,7 @@ router.get("/getStockChartData/:ticker", async (req, res) => {
 
 // Gets all stocks from DB.
 router.get("/getAllStocks", async (req, res) => {
-  const allStocks = await StockModel.findAll();
+  const allStocks = await Stocks.findAll();
 
   res.json(allStocks);
 });

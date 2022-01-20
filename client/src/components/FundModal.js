@@ -29,6 +29,8 @@ const FundModal = (props) => {
     } else {
       console.log(result);
       stripeTokenHandler(result.token);
+      
+      // TODO: show confirmation page
     }
   };
 

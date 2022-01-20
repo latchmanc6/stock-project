@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const UsersModel = sequelize.define(
-    "UsersModel",
+  const Users = sequelize.define(
+    "Users",
     {
       email: {
         type: DataTypes.STRING(360),
@@ -38,19 +38,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  UsersModel.associate = (models) => {
-    UsersModel.hasMany(models.StockTransactionModel, {
+  Users.associate = (models) => {
+    Users.hasMany(models.StockTransactions, {
       onDelete: "cascade",
     });
 
-    UsersModel.hasMany(models.FundTransactionModel, {
+    Users.hasMany(models.FundTransactions, {
       onDelete: "cascade",
     });
 
-    UsersModel.hasMany(models.WatchlistModel, {
+    Users.hasMany(models.Watchlists, {
       onDelete: "cascade",
     });
   };
 
-  return UsersModel;
+  return Users;
 };
