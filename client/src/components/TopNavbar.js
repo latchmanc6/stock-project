@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -7,14 +7,18 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import FundModal from "./FundModal";
+import { AuthContext } from "../helpers/AuthContext";
 
 const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
 // const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
 
-const TopNavbar = ({authState, logout}) => {
+const TopNavbar = ({logout}) => {
+
   const [showModal, setModalShow] = useState(false);
   const [amount, setAmount] = useState("");
   const [depositStatus, setDepositStatus] = useState(false);
+  const { authState } = useContext(AuthContext);
+
 
   const handleModalClose = () => {
     setModalShow(false);
@@ -33,7 +37,7 @@ const TopNavbar = ({authState, logout}) => {
           <Nav className="me-auto">
             {authState.status && (
               <>
-                <Nav.Link href="#">Portfolio</Nav.Link>
+                <Nav.Link href="/my-portfolio">Portfolio</Nav.Link>
                 <NavDropdown title="Funds" id="basic-nav-dropdown">
                   <NavDropdown.Item onClick={handleModalShow}>
                     Add funds

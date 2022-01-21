@@ -11,6 +11,7 @@ import axios from "axios";
 import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Portfolio from "./pages/Portfolio";
 
 import TopNavbar from "./components/TopNavbar";
 
@@ -50,12 +51,13 @@ function App() {
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
 
-          <TopNavbar authState={authState} logout={logout} />
+          <TopNavbar logout={logout} />
 
           <Routes>
             <Route path="/trade/:ticker" element={<Trade />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/my-portfolio" element={<Portfolio />} />
           </Routes>
 
         </Router>
