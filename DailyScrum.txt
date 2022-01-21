@@ -1,4 +1,28 @@
 -----------------------------------------------
+01/20/22
+
+Nari
+1. Done / not done since the last scrum:
+- applied auth status on navbar
+- implemented creating/adding funds on db
+- adding confirmation message on add funds modal on success
+2. To do until the next Scrum:
+- finish the confirmation on adding funds
+- start user portfolio
+3. Need assistance/figure things out
+- Nothing for now
+
+Chris
+1. Done / not done since the last scrum:
+- Created comapny news endpoint + added it to trade page
+- Styling to trade page 
+- Started Buy/Sell implementation of stocks
+2. To do until the next Scrum:
+- Finish Buy/Sell implementation of stocks
+3. Need assistance/figure things out
+- Nothing for now
+
+-----------------------------------------------
 01/19/22
 
 Nari
