@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { Stocks } = require("../models");
+const { Stocks, StockTransactions, Users } = require("../models");
 const fetch = require("node-fetch");
+const moment = require("moment");
 
 require("dotenv").config();
 
@@ -114,13 +115,15 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
         error.push({ ErrorBasicFinanceData: err });
       });
   }
-  const updatedStock = await Stocks.findOne({ where: { ticker: stockTicker } });
+  const updatedStock = await Stocks.findOne({
+    where: { ticker: stockTicker },
+  });
   res.json(updatedStock);
 });
 
 // Update the stock price at the time of purchase, no time restriction.
-router.get("/updateStockPrice", async (req, res) => {
-  const stockTicker = req.body.ticker;
+router.get("/updateStockPrice/:ticker", async (req, res) => {
+  const stockTicker = req.params.ticker;
   fetch(
     "https://finnhub.io/api/v1/quote?symbol=" +
       stockTicker +
@@ -135,11 +138,13 @@ router.get("/updateStockPrice", async (req, res) => {
         },
         { where: { ticker: stockTicker } }
       );
-      res.json(data);
     })
     .catch((err) => {
       res.json({ error: err });
     });
+
+  const stock = await Stocks.findOne({ where: { ticker: stockTicker } });
+  res.json(stock);
 });
 
 // Get stock chart data.
@@ -166,6 +171,61 @@ router.get("/getAllStocks", async (req, res) => {
   const allStocks = await Stocks.findAll();
 
   res.json(allStocks);
+});
+
+// Get stock chart data.
+router.get("/getStockNews/:ticker", async (req, res) => {
+  const stockTicker = req.params.ticker;
+  let currentDate = new Date();
+  currentDate = moment(currentDate).format("YYYY-MM-DD");
+  let pastYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+  pastYear = moment(pastYear).format("YYYY-MM-DD");
+
+  fetch(
+    "https://finnhub.io/api/v1/company-news?symbol=" +
+      stockTicker +
+      "&from=" +
+      pastYear +
+      "&to=" +
+      currentDate +
+      "&token=" +
+      FinnhubAPIKey
+  )
+    .then((response) => response.json())
+    .then(async (data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json({ error: err });
+    });
+});
+
+router.post("/buyStock", async (req, res) => {
+  const orderData = req.body.data;
+  const userData = req.body.userData;
+
+  await StockTransactions.create(orderData);
+
+  await Users.decrement("cash", {
+    by: orderData.total,
+    where: { id: userData.id },
+  });
+
+  res.json(orderData);
+});
+
+router.post("/sellStock", async (req, res) => {
+  const orderData = req.body.data;
+  const userData = req.body.userData;
+
+  await StockTransactions.create(orderData);
+
+  await Users.increment("cash", {
+    by: orderData.total,
+    where: { id: userData.id },
+  });
+
+  res.json(orderData);
 });
 
 module.exports = router;

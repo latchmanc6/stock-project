@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import StockChart from "../components/StockChart";
 import moment from "moment";
 import SearchBar from "../components/SearchBar";
+import BuyModal from "../components/StockTransactionModal/BuyModal";
+import SellModal from "../components/StockTransactionModal/SellModal";
+import { AuthContext } from "../helpers/AuthContext";
 
 function Trade() {
   let { ticker } = useParams();
+  const { authState } = useContext(AuthContext);
   const [stockData, setStockData] = useState({});
   const [searchBarData, setSearchBarData] = useState({});
+  const [stockNews, setStockNews] = useState([]);
+  const [buyModalShow, setBuyModalShow] = useState(false);
+  const [sellModalShow, setSellModalShow] = useState(false);
+  const [transactionShareData, setTransactionShareData] = useState({});
+  const [transactionUserData, setTransactionUserData] = useState({});
+  const [availableQuantity, setAvailableQuantity] = useState(0);
 
   const getTickerDataFromAPI = async () => {
     await axios
@@ -19,17 +29,78 @@ function Trade() {
       });
   };
 
+  const getStockNews = async () => {
+    await axios
+      .get(`http://localhost:3001/api/stock/getStockNews/${ticker}`)
+      .then((response) => {
+        console.log(response.data.slice(0, 10));
+        setStockNews(response.data.slice(0, 10));
+      });
+  };
+
   const getAllTickers = async () => {
     await axios
       .get("http://localhost:3001/api/stock/getAllStocks")
       .then((response) => {
-        // console.log(response.data);
         setSearchBarData(response.data);
       });
   };
 
+  const getStockTransactionData = async () => {
+    await axios
+      .get(`http://localhost:3001/api/stock/updateStockPrice/${ticker}`)
+      .then((response) => {
+        setTransactionShareData(response.data);
+      });
+  };
+
+  const getUserTransactionData = async () => {
+    const userId = authState.id;
+    await axios
+      .get(`http://localhost:3001/funds/getUserInformation/${userId}`)
+      .then((response) => {
+        setTransactionUserData(response.data);
+      });
+  };
+
+  const getAvailableQuantity = async () => {
+    console.log("User Id: " + authState.id);
+    console.log("Ticker: " + ticker);
+    const data = {
+      userId: authState.id,
+      ticker: ticker,
+    };
+    await axios
+      .post("http://localhost:3001/funds/getAmountOfStockUserOwns", data)
+      .then((response) => {
+        setAvailableQuantity(response.data);
+      });
+  };
+
+  const handleBuyModalShow = () => {
+    getStockTransactionData();
+    getUserTransactionData();
+    setBuyModalShow(true);
+  };
+  const handleBuyModalClose = () => {
+    setTransactionShareData({});
+    setBuyModalShow(false);
+  };
+
+  const handleSellModalShow = () => {
+    getStockTransactionData();
+    getUserTransactionData();
+    getAvailableQuantity();
+    setSellModalShow(true);
+  };
+  const handleSellModalClose = () => {
+    setTransactionShareData({});
+    setSellModalShow(false);
+  };
+
   useEffect(() => {
     getTickerDataFromAPI();
+    getStockNews();
     getAllTickers();
   }, []);
 
@@ -37,7 +108,11 @@ function Trade() {
     <div>
       <SearchBar placeholder="Enter a ticker..." data={searchBarData} />
       <div>
-        <img className="stockLogo" src={stockData.logo}></img>
+        <img
+          className="stockLogo"
+          src={stockData.logo}
+          alt="Company Logo"
+        ></img>
         <h1 className="stockHeaderName">{stockData.companyName}</h1>
         <h1 className="stockHeaderTicker">{stockData.ticker}</h1>
       </div>
@@ -47,8 +122,25 @@ function Trade() {
       </div>
       <div>
         <h2>${stockData.currentPrice}</h2>
-        <button className="btn btn-primary">Buy</button>
-        <button className="btn btn-danger">Sell</button>
+        <button onClick={handleBuyModalShow} className="btn btn-primary">
+          Buy
+        </button>
+        <BuyModal
+          buyModalShow={buyModalShow}
+          handleBuyModalClose={handleBuyModalClose}
+          shareData={transactionShareData}
+          userData={transactionUserData}
+        />
+        <button onClick={handleSellModalShow} className="btn btn-danger">
+          Sell
+        </button>
+        <SellModal
+          sellModalShow={sellModalShow}
+          handleSellModalClose={handleSellModalClose}
+          shareData={transactionShareData}
+          userData={transactionUserData}
+          availableQuantity={availableQuantity}
+        />
       </div>
       <StockChart></StockChart>
       <h2>Key Statistics</h2>
@@ -62,7 +154,9 @@ function Trade() {
         <div className="col-6">
           <div>
             <span>PE Ratio: </span>
-            <span>{stockData.peRatio}</span>
+            <span>
+              {stockData.peRatio === null ? "N/A" : stockData.peRatio}
+            </span>
           </div>
         </div>
       </div>
@@ -94,6 +188,23 @@ function Trade() {
           </div>
         </div>
       </div>
+      <h2>Related News</h2>
+      {stockNews.map((value, key) => {
+        return (
+          <div key={key} className="newsCard">
+            <div className="newsSquare">
+              <img className="newsImg" src={value.image} alt="Company News" />
+              <div className="newsHeadline">{value.headline}</div>
+              <p className="newsSummary">{value.summary}</p>
+              <div>
+                <a href={value.url} target="_" className="newsButton btn btn-primary">
+                  Read More
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

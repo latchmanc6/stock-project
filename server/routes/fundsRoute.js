@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { FundTransactions, Users } = require("../models");
+const { FundTransactions, Users, StockTransactions } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 require("dotenv").config();
@@ -50,6 +50,55 @@ router.post("/add", validateToken, async (req, res) => {
       },
     });
   }
+});
+
+router.get("/getUserInformation/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const user = await Users.findOne({ where: { id: userId } });
+  const userInfo = { id: user.id, email: user.email, cash: user.cash };
+  res.json(userInfo);
+});
+
+router.post("/getAmountOfStockUserOwns", async (req, res) => {
+  const userId = req.body.userId;
+  const ticker = req.body.ticker;
+
+  let totalBuys = 0;
+  let totalSells = 0;
+  let availableQuantity = 0;
+
+  const buyTransactions = await StockTransactions.findAll({
+    where: { ticker: ticker, type: "buy", UserId: userId },
+  });
+  const sellTransactions = await StockTransactions.findAll({
+    where: { ticker: ticker, type: "sell", UserId: userId },
+  });
+
+  if (buyTransactions.length !== 0) {
+    buyTransactions.forEach((element) => {
+      totalBuys += element.quantity;
+    });
+  }
+
+  if (sellTransactions.length !== 0) {
+    sellTransactions.forEach((element) => {
+      totalSells += element.quantity;
+    });
+  }
+
+  if (totalBuys - totalSells > 0) {
+    availableQuantity = totalBuys - totalSells;
+  }
+
+  console.log({
+    availableQuantity: availableQuantity,
+    buyTransactions: buyTransactions,
+    totalBuys: totalBuys,
+    sellTransactions: sellTransactions,
+    totalSells: totalSells,
+  });
+
+  res.json(availableQuantity);
 });
 
 module.exports = router;
