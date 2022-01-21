@@ -1,22 +1,24 @@
-import React, { useState, useContext } from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useContext } from "react";
 
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import FundModal from "./FundModal";
-import { AuthContext } from "../helpers/AuthContext";
-import { ModalContext } from "../helpers/ModalContext";
 
-const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
+import { Elements } from "@stripe/react-stripe-js";
+import { stripePromise } from "helpers/stripePromise";
+// import { loadStripe } from "@stripe/stripe-js";
+import FundModal from "./FundModal";
+import { AuthContext } from "helpers/AuthContext";
+import { ModalContext } from "helpers/ModalContext";
+
+// const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
 // const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
 
 const TopNavbar = ({ logout }) => {
   const { authState } = useContext(AuthContext);
   const { modal } = useContext(ModalContext);
-  const [setModalShow] = modal;
+  const [showModal, setModalShow] = modal;
 
   return (
     <Navbar bg="light" expand="lg" variant="light">
