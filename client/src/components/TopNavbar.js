@@ -12,13 +12,12 @@ import { AuthContext } from "../helpers/AuthContext";
 const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
 // const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
 
-const TopNavbar = ({logout}) => {
-
+const TopNavbar = ({ logout }) => {
   const [showModal, setModalShow] = useState(false);
   const [amount, setAmount] = useState("");
   const [depositStatus, setDepositStatus] = useState(false);
-  const { authState } = useContext(AuthContext);
 
+  const { authState } = useContext(AuthContext);
 
   const handleModalClose = () => {
     setModalShow(false);
@@ -67,9 +66,7 @@ const TopNavbar = ({logout}) => {
                   <NavDropdown.Item href="#"></NavDropdown.Item>
                   <NavDropdown.Item href="#">Something</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logout}>
-                    Sign Out
-                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logout}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
               </>
             ) : (
