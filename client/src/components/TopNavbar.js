@@ -11,10 +11,16 @@ import FundModal from "./FundModal";
 const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
 // const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
 
-const TopNavbar = (props) => {
+const TopNavbar = ({authState, logout}) => {
   const [showModal, setModalShow] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [depositStatus, setDepositStatus] = useState(false);
 
-  const handleModalClose = () => setModalShow(false);
+  const handleModalClose = () => {
+    setModalShow(false);
+    setAmount(0);
+    setDepositStatus(false);
+  };
   const handleModalShow = () => setModalShow(true);
 
   return (
@@ -25,12 +31,10 @@ const TopNavbar = (props) => {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-
-            {props.authState.status && 
+            {authState.status && (
               <>
                 <Nav.Link href="#">Portfolio</Nav.Link>
                 <NavDropdown title="Funds" id="basic-nav-dropdown">
-                  
                   <NavDropdown.Item onClick={handleModalShow}>
                     Add funds
                   </NavDropdown.Item>
@@ -38,24 +42,30 @@ const TopNavbar = (props) => {
                     <FundModal
                       showModal={showModal}
                       handleModalClose={handleModalClose}
+                      amount={amount}
+                      setAmount={setAmount}
+                      depositStatus={depositStatus}
+                      setDepositStatus={setDepositStatus}
                     />
                   </Elements>
-                  
+
                   <NavDropdown.Item href="#">Withdraw funds</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#">View transaction</NavDropdown.Item>
                 </NavDropdown>
               </>
-            }
+            )}
 
-            {props.authState.status ? (
+            {authState.status ? (
               <>
                 <NavDropdown title="User" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#">Profile</NavDropdown.Item>
                   <NavDropdown.Item href="#"></NavDropdown.Item>
                   <NavDropdown.Item href="#">Something</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={props.logout}>Sign Out</NavDropdown.Item>
+                  <NavDropdown.Item onClick={logout}>
+                    Sign Out
+                  </NavDropdown.Item>
                 </NavDropdown>
               </>
             ) : (
@@ -64,7 +74,6 @@ const TopNavbar = (props) => {
                 <Nav.Link href="/login">Sign In</Nav.Link>
               </>
             )}
-            
           </Nav>
         </Navbar.Collapse>
       </Container>

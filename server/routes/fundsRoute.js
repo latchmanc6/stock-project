@@ -38,7 +38,11 @@ router.post("/add", validateToken, async (req, res) => {
       where: { id: userId },
     });
 
-    res.send({ status: charge.status });
+    res.send({ 
+      status: charge.status, 
+      chargedAmount: charge.amount / 100 
+    });
+
   } catch (error) {
     return res.status(400).send({
       error: {
