@@ -3,6 +3,27 @@
 
 Nari
 1. Done / not done since the last scrum:
+- added confimation message on adding funds
+- created route for portfolio and basic client side
+2. To do until the next Scrum:
+- finish portfolio table 
+3. Need assistance/figure things out
+- Nothing for now
+
+Chris
+1. Done / not done since the last scrum:
+- Finished buy/sell functionality
+2. To do until the next Scrum:
+- Add a confirmation pop-up for buy/sell
+- Work on fund transaction history?
+3. Need assistance/figure things out
+- Nothing for now
+
+-----------------------------------------------
+01/20/22
+
+Nari
+1. Done / not done since the last scrum:
 - applied auth status on navbar
 - implemented creating/adding funds on db
 - adding confirmation message on add funds modal on success
