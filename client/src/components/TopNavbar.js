@@ -8,23 +8,15 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import FundModal from "./FundModal";
 import { AuthContext } from "../helpers/AuthContext";
+import { ModalContext } from "../helpers/ModalContext";
 
 const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
 // const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
 
 const TopNavbar = ({ logout }) => {
-  const [showModal, setModalShow] = useState(false);
-  const [amount, setAmount] = useState("");
-  const [depositStatus, setDepositStatus] = useState(false);
-
   const { authState } = useContext(AuthContext);
-
-  const handleModalClose = () => {
-    setModalShow(false);
-    setAmount(0);
-    setDepositStatus(false);
-  };
-  const handleModalShow = () => setModalShow(true);
+  const { modal } = useContext(ModalContext);
+  const [setModalShow] = modal;
 
   return (
     <Navbar bg="light" expand="lg" variant="light">
@@ -38,18 +30,16 @@ const TopNavbar = ({ logout }) => {
               <>
                 <Nav.Link href="/my-portfolio">Portfolio</Nav.Link>
                 <NavDropdown title="Funds" id="basic-nav-dropdown">
-                  <NavDropdown.Item onClick={handleModalShow}>
+                  {/* <NavDropdown.Item onClick={handleModalShow}> */}
+                  <NavDropdown.Item
+                    onClick={() => {
+                      setModalShow(true);
+                    }}
+                  >
                     Add funds
                   </NavDropdown.Item>
                   <Elements stripe={stripePromise}>
-                    <FundModal
-                      showModal={showModal}
-                      handleModalClose={handleModalClose}
-                      amount={amount}
-                      setAmount={setAmount}
-                      depositStatus={depositStatus}
-                      setDepositStatus={setDepositStatus}
-                    />
+                    <FundModal />
                   </Elements>
 
                   <NavDropdown.Item href="#">Withdraw funds</NavDropdown.Item>

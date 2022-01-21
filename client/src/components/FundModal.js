@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
+import { ModalContext } from "../helpers/ModalContext";
 
 import Modal from "react-bootstrap/Modal";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -9,17 +10,13 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-const FundModal = ({
-  showModal,
-  handleModalClose,
-  amount,
-  setAmount,
-  depositStatus,
-  setDepositStatus,
-}) => {
+const FundModal = () => {
   const { authState } = useContext(AuthContext);
-  // const [amount, setAmount] = useState("");
-  // const [depositStatus, setDepositStatus] = useState(false);
+
+  const { modal, amount, depositStatus } = useContext(ModalContext);
+  const [showModal, setModalShow] = modal;
+  const [amountVal, setAmountVal] = amount;
+  const [depositStatusVal, setDepositStatusVal] = depositStatus;
 
   let navigate = useNavigate();
 
@@ -53,13 +50,13 @@ const FundModal = ({
       if (depositResult.status !== "succeeded") {
         console.log(depositResult.error.message);
       } else {
-        setDepositStatus(true);
+        setDepositStatusVal(true);
       }
     }
   };
 
   const stripeTokenHandler = async (token) => {
-    const paymentData = { token: token.id, amount };
+    const paymentData = { token: token.id, amount: amountVal };
 
     // Use fetch to send the token ID and any other payment data to your server.
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -77,12 +74,18 @@ const FundModal = ({
   };
 
   return (
-    <Modal centered show={showModal} onHide={handleModalClose}>
+    <Modal
+      centered
+      show={showModal}
+      onHide={() => {
+        setModalShow(false);
+      }}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Add funds</Modal.Title>
       </Modal.Header>
 
-      {!depositStatus ? (
+      {!depositStatusVal ? (
         <>
           <Form onSubmit={handleSubmit}>
             <Modal.Body>
@@ -90,7 +93,7 @@ const FundModal = ({
                 <Form.Label>Amount to deposit</Form.Label>
                 <InputGroup>
                   <InputGroup.Text>$</InputGroup.Text>
-                  <FormControl onChange={(e) => setAmount(e.target.value)} />
+                  <FormControl onChange={(e) => setAmountVal(e.target.value)} />
                   <InputGroup.Text>.00</InputGroup.Text>
                 </InputGroup>
               </Form.Group>
@@ -111,10 +114,15 @@ const FundModal = ({
         </>
       ) : (
         <>
-          <Modal.Body>{`You've got $${amount} available to trade!`}</Modal.Body>
+          <Modal.Body>{`You've got $${amountVal} available to trade!`}</Modal.Body>
 
           <Modal.Footer>
-            <Button variant="primary" onClick={handleModalClose}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                setModalShow(false);
+              }}
+            >
               Done
             </Button>
           </Modal.Footer>

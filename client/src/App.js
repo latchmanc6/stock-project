@@ -1,9 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -14,13 +10,20 @@ import Login from "./pages/Login";
 import Portfolio from "./pages/Portfolio";
 
 import TopNavbar from "./components/TopNavbar";
+import { ModalContext } from "./helpers/ModalContext";
 
 function App() {
+  // AuthContext Values
   const [authState, setAuthState] = useState({
     email: "",
     id: 0,
     status: false,
   });
+
+  // ModalContext Values
+  const [showModal, setModalShow] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [depositStatus, setDepositStatus] = useState(false);
 
   useEffect(() => {
     axios
@@ -47,20 +50,25 @@ function App() {
 
   return (
     <div className="App">
-
       <AuthContext.Provider value={{ authState, setAuthState }}>
-        <Router>
+        <ModalContext.Provider
+          value={{
+            modal: [showModal, setModalShow],
+            amount: [amount, setAmount],
+            depositStatus: [depositStatus, setDepositStatus],
+          }}
+        >
+          <Router>
+            <TopNavbar logout={logout} />
 
-          <TopNavbar logout={logout} />
-
-          <Routes>
-            <Route path="/trade/:ticker" element={<Trade />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/my-portfolio" element={<Portfolio />} />
-          </Routes>
-
-        </Router>
+            <Routes>
+              <Route path="/trade/:ticker" element={<Trade />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/my-portfolio" element={<Portfolio />} />
+            </Routes>
+          </Router>
+        </ModalContext.Provider>
       </AuthContext.Provider>
     </div>
   );
