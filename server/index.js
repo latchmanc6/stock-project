@@ -13,6 +13,8 @@ const usersRouter = require("./routes/usersRoute");
 app.use("/auth", usersRouter);
 const fundsRouter = require("./routes/fundsRoute");
 app.use("/funds", fundsRouter);
+const portfolioRouter = require("./routes/portfolioRoute");
+app.use("/portfolio", portfolioRouter);
 
 // Start server.
 db.sequelize.sync().then(() => {

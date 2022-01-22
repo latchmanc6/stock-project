@@ -6,6 +6,16 @@ const { validateToken } = require("../middlewares/AuthMiddleware");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 
+router.get("/", validateToken, async (req, res) => {
+  const { id } = req.user;
+
+  const cash = await Users.findByPk(id, {
+    attributes: ["cash"],
+  });
+
+  res.json(cash);
+});
+
 router.post("/add", validateToken, async (req, res) => {
   const { amount } = req.body;
 
@@ -38,11 +48,10 @@ router.post("/add", validateToken, async (req, res) => {
       where: { id: userId },
     });
 
-    res.send({ 
-      status: charge.status, 
-      chargedAmount: charge.amount / 100 
+    res.send({
+      status: charge.status,
+      chargedAmount: charge.amount / 100,
     });
-
   } catch (error) {
     return res.status(400).send({
       error: {

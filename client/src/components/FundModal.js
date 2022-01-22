@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
 import { ModalContext } from "../helpers/ModalContext";
 
 import Modal from "react-bootstrap/Modal";
@@ -10,24 +8,20 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-const FundModal = () => {
-  const { authState } = useContext(AuthContext);
-
+const FundModal = ({ totalCash, setTotalCash }) => {
   const { modal, amount, depositStatus } = useContext(ModalContext);
   const [showModal, setModalShow] = modal;
   const [amountVal, setAmountVal] = amount;
   const [depositStatusVal, setDepositStatusVal] = depositStatus;
 
-  let navigate = useNavigate();
-
   const stripe = useStripe();
   const elements = useElements();
 
-  useEffect(() => {
-    if (!authState.status) {
-      navigate("/login");
-    }
-  }, []);
+  const handleModalClose = () => {
+    setModalShow(false);
+    setAmountVal(0);
+    setDepositStatusVal(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -51,6 +45,10 @@ const FundModal = () => {
         console.log(depositResult.error.message);
       } else {
         setDepositStatusVal(true);
+        if (totalCash)
+          setTotalCash(
+            (parseFloat(totalCash) + parseFloat(amountVal)).toFixed(2)
+          );
       }
     }
   };
@@ -74,13 +72,7 @@ const FundModal = () => {
   };
 
   return (
-    <Modal
-      centered
-      show={showModal}
-      onHide={() => {
-        setModalShow(false);
-      }}
-    >
+    <Modal centered show={showModal} onHide={handleModalClose}>
       <Modal.Header closeButton>
         <Modal.Title>Add funds</Modal.Title>
       </Modal.Header>
@@ -119,9 +111,7 @@ const FundModal = () => {
           <Modal.Footer>
             <Button
               variant="primary"
-              onClick={() => {
-                setModalShow(false);
-              }}
+              onClick={handleModalClose}
             >
               Done
             </Button>

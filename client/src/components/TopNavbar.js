@@ -4,16 +4,12 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
 import { Elements } from "@stripe/react-stripe-js";
+
 import { stripePromise } from "helpers/stripePromise";
-// import { loadStripe } from "@stripe/stripe-js";
-import FundModal from "./FundModal";
 import { AuthContext } from "helpers/AuthContext";
 import { ModalContext } from "helpers/ModalContext";
-
-// const stripePromise = loadStripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
-// const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
+import FundModal from "./FundModal";
 
 const TopNavbar = ({ logout }) => {
   const { authState } = useContext(AuthContext);
@@ -32,7 +28,6 @@ const TopNavbar = ({ logout }) => {
               <>
                 <Nav.Link href="/my-portfolio">Portfolio</Nav.Link>
                 <NavDropdown title="Funds" id="basic-nav-dropdown">
-                  {/* <NavDropdown.Item onClick={handleModalShow}> */}
                   <NavDropdown.Item
                     onClick={() => {
                       setModalShow(true);
