@@ -1,13 +1,13 @@
 /* Google font - Ubuntu */
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap");
 
-.App {
+.App:not(.newsCard):not(.newsSquare):not(.newsImg) {
   text-align: center;
 }
 
 body {
   margin: 0;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
 a {
@@ -35,6 +35,67 @@ a {
 
 .stockHeaderTicker {
   display: inline;
+}
+
+.newsCard {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.newsSquare:hover {
+  -webkit-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.newsSquare {
+  width: 460px;
+  height: 535px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0px 20px 50px #d9dbdf;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.newsImg {
+  clip: rect(0px, 460px, 220px, 0px);
+  border-radius: 4px;
+  position: absolute;
+  max-width:100%;
+  height: auto;
+}
+
+.newsHeadline {
+  margin: auto;
+  text-align: left;
+  margin-top: 240px;
+  padding-left: 30px;
+  font-size: 24px;
+}
+.newsSummary {
+  text-align: justify;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  color: #797979;
+  line-height: 18px;
+}
+
+.newsButton {
+  width: 120px;
+  padding: 10px 18px;
+  border-radius: 3px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 70px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 /* ------------------------------------------ Trade Page END ------------------------------------------ */
