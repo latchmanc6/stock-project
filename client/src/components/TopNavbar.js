@@ -41,7 +41,7 @@ const TopNavbar = ({ logout }) => {
 
                   <NavDropdown.Item href="#">Withdraw funds</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#">View transaction</NavDropdown.Item>
+                  <NavDropdown.Item href="#">View transaction history</NavDropdown.Item>
                 </NavDropdown>
               </>
             )}

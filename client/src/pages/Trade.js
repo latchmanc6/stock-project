@@ -199,8 +199,8 @@ function Trade() {
           <div key={key} className="newsCard">
             <div className="newsSquare">
               <img className="newsImg" src={value.image} alt="Company News" />
-              <div className="newsHeadline">{value.headline}</div>
-              <p className="newsSummary">{value.summary}</p>
+              <div className="newsHeadline">{value.headline.length > 72 ? value.headline.slice(0, 69) + "..." : value.headline}</div>
+              <p className="newsSummary">{value.summary.length > 280 ? value.summary.slice(0, 277) + "..." : value.summary}</p>
               <div>
                 <a
                   href={value.url}
