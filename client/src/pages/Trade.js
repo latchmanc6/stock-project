@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import StockChart from "../components/StockChart";
@@ -22,15 +22,19 @@ function Trade() {
 
   const getTickerDataFromAPI = async () => {
     await axios
-      .get(`http://localhost:3001/api/stock/getStockInfo/${ticker}`)
-      .then((response) => {
-        console.log(response.data);
-        setStockData(response.data);
+      .get(`http://localhost:3001/api/stock/getStockInfoUpdate/${ticker}`)
+      .then(() => {
+        axios
+          .get(`http://localhost:3001/api/stock/getStockInfo/${ticker}`)
+          .then((response) => {
+            console.log(response.data);
+            setStockData(response.data);
+          });
       });
   };
 
-  const getStockNews = async () => {
-    await axios
+  const getStockNews = () => {
+    axios
       .get(`http://localhost:3001/api/stock/getStockNews/${ticker}`)
       .then((response) => {
         console.log(response.data.slice(0, 10));
@@ -38,39 +42,40 @@ function Trade() {
       });
   };
 
-  const getAllTickers = async () => {
-    await axios
+  const getAllTickers = () => {
+    axios
       .get("http://localhost:3001/api/stock/getAllStocks")
       .then((response) => {
+        console.log(response.data);
         setSearchBarData(response.data);
       });
   };
 
-  const getStockTransactionData = async () => {
-    await axios
+  const getStockTransactionData = () => {
+    axios
       .get(`http://localhost:3001/api/stock/updateStockPrice/${ticker}`)
       .then((response) => {
+        console.log(response.data);
         setTransactionShareData(response.data);
       });
   };
 
-  const getUserTransactionData = async () => {
+  const getUserTransactionData = () => {
     const userId = authState.id;
-    await axios
+    axios
       .get(`http://localhost:3001/funds/getUserInformation/${userId}`)
       .then((response) => {
+        console.log(response.data);
         setTransactionUserData(response.data);
       });
   };
 
-  const getAvailableQuantity = async () => {
-    console.log("User Id: " + authState.id);
-    console.log("Ticker: " + ticker);
+  const getAvailableQuantity = () => {
     const data = {
       userId: authState.id,
       ticker: ticker,
     };
-    await axios
+    axios
       .post("http://localhost:3001/funds/getAmountOfStockUserOwns", data)
       .then((response) => {
         setAvailableQuantity(response.data);
@@ -197,7 +202,11 @@ function Trade() {
               <div className="newsHeadline">{value.headline}</div>
               <p className="newsSummary">{value.summary}</p>
               <div>
-                <a href={value.url} target="_" className="newsButton btn btn-primary">
+                <a
+                  href={value.url}
+                  target="_"
+                  className="newsButton btn btn-primary"
+                >
                   Read More
                 </a>
               </div>
