@@ -4,9 +4,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { GoPlus } from "react-icons/go";
 import { Elements } from "@stripe/react-stripe-js";
-import { stripePromise } from "helpers/stripePromise";
-import { ModalContext } from "helpers/ModalContext";
-import FundModal from "components/FundModal";
+import { stripePromise } from "../../helpers/stripePromise";
+import { ModalContext } from "../../helpers/ModalContext";
+import FundModal from "../../components/FundModal";
 
 const FundCard = () => {
   const [totalCash, setTotalCash] = useState(0);

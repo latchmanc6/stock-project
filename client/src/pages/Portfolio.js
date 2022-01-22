@@ -2,8 +2,8 @@ import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import StockList from "components/StockList";
-import FundCard from "components/Portfolio/FundCard";
+import StockList from "../components/StockList";
+import FundCard from "../components/Portfolio/FundCard";
 
 const Portfolio = () => {
   let navigate = useNavigate();

@@ -6,9 +6,9 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Elements } from "@stripe/react-stripe-js";
 
-import { stripePromise } from "helpers/stripePromise";
-import { AuthContext } from "helpers/AuthContext";
-import { ModalContext } from "helpers/ModalContext";
+import { stripePromise } from "../helpers/stripePromise";
+import { AuthContext } from "../helpers/AuthContext";
+import { ModalContext } from "../helpers/ModalContext";
 import FundModal from "./FundModal";
 
 const TopNavbar = ({ logout }) => {
