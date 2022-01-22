@@ -1,6 +1,7 @@
 import { css } from "styled-components";
 
 export const buttonbase = css`
+  background: rgb(64, 62, 61);
   border-radius: 100px;
   border-width: 0px;
   color: rgb(255, 255, 255);

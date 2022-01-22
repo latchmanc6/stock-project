@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import { GoPlus } from "react-icons/go";
 import { Elements } from "@stripe/react-stripe-js";
+
 import { stripePromise } from "helpers/stripePromise";
 import { ModalContext } from "helpers/ModalContext";
 import FundModal from "components/FundModal";
+import { Button, CardRound } from 'components/Styled/style.js';
 
 const FundCard = () => {
   const [totalCash, setTotalCash] = useState(0);
@@ -15,7 +16,7 @@ const FundCard = () => {
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD"
+    currency: "USD",
   });
 
   useEffect(() => {
@@ -30,9 +31,10 @@ const FundCard = () => {
   }, [totalCash]);
 
   return (
-    <div>
-      <p>Funds in this account</p>
-      <Card style={{ width: "18rem" }}>
+    <>
+      <h5 className="text-left text-muted">Funds in this account</h5>
+      {/* <Card style={{ width: "100%" }}> */}
+      <CardRound>
         <Card.Body>
           <Card.Subtitle className="text-muted">
             Available to trade
@@ -46,12 +48,12 @@ const FundCard = () => {
           >
             <GoPlus /> Add
           </Button>
-            <Elements stripe={stripePromise}>
-              <FundModal totalCash={totalCash} setTotalCash={setTotalCash} />
-            </Elements>
+          <Elements stripe={stripePromise}>
+            <FundModal totalCash={totalCash} setTotalCash={setTotalCash} />
+          </Elements>
         </Card.Body>
-      </Card>
-    </div>
+      </CardRound>
+    </>
   );
 };
 
