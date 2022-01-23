@@ -31,16 +31,8 @@ function SellModal(props) {
 
   const confirmOrder = async () => {
     if (quantity > availableQuantity) {
-        console.log("You do not have enough stock to fulfill this transaction.");
-        return;
-      }
-
-      console.log("Total return: " + estimatedCost);
-      console.log("Total return (formula): " + (
-        Math.round(quantity * shareData.currentPrice * 100) / 100
-      ).toFixed(2));
-      console.log("Quantity: " + quantity);
-      console.log()
+      return;
+    }
     const data = {
       ticker: shareData.ticker,
       type: "sell",
@@ -97,7 +89,9 @@ function SellModal(props) {
             <p></p>
           )}
           <br />
-          <div>{shareData.ticker} shares owned: {availableQuantity}</div>
+          <div>
+            {shareData.ticker} shares owned: {availableQuantity}
+          </div>
           <div>Current Share Price: ${shareData.currentPrice}</div>
           <br />
           <Modal.Footer>

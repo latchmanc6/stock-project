@@ -5,8 +5,8 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import StockList from "components/StockList";
-import FundCard from "components/Portfolio/FundCard";
+import StockList from "../components/StockList";
+import FundCard from "../components/Portfolio/FundCard";
 
 const Portfolio = () => {
   let navigate = useNavigate();

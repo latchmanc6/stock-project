@@ -3,7 +3,6 @@ import axios from "axios";
 import Card from "react-bootstrap/Card";
 import { GoPlus } from "react-icons/go";
 import { Elements } from "@stripe/react-stripe-js";
-
 import { stripePromise } from "helpers/stripePromise";
 import { ModalContext } from "helpers/ModalContext";
 import FundModal from "components/FundModal";

@@ -28,12 +28,11 @@ function StockChart() {
   const [stockChartData, setStockChartData] = useState({});
   const [data, setData] = useState({ labels: [], datasets: [] });
 
-  const getChartDataFromAPI = async () => {
-    await axios
+  const getChartDataFromAPI = () => {
+    axios
       .get(`http://localhost:3001/api/stock/getStockChartData/${ticker}`)
-      .then(async (response) => {
-        console.log(response.data);
-        await setStockChartData(response.data);
+      .then((response) => {
+        setStockChartData(response.data);
       })
       .then(() => {
         setData({
@@ -188,13 +187,32 @@ function StockChart() {
 
   useEffect(() => {
     getChartDataFromAPI();
+    load1WChartData();
   }, []);
 
   return (
     <div>
       <div className="chartContainer">
         <Line
-          data={data}
+          data={
+            data.labels.length === 0
+              ? {
+                  labels: getDaysOfStockDataLabel(7),
+                  datasets: [
+                    {
+                      label: `${ticker}`,
+                      data: getDaysOfStockData(7),
+                      borderColor: "rgb(255, 99, 132)",
+                      backgroundColor: "rgba(255, 99, 132, 0.5)",
+                    },
+                  ],
+                  options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                  },
+                }
+              : data
+          }
           options={{
             maintainAspectRatio: false,
           }}

@@ -32,15 +32,16 @@ router.get("/addAllStocksToDB", (req, res) => {
 });
 
 // Update stock information if neeeded, called everytime user accesses stock trade.
-router.get("/getStockInfo/:ticker", async (req, res) => {
+router.get("/getStockInfoUpdate/:ticker", async (req, res) => {
   const stockTicker = req.params.ticker;
-  const stock = await Stocks.findOne({ where: { ticker: stockTicker } });
+  let stock = await Stocks.findOne({ where: { ticker: stockTicker } });
   const THREE_MIN = 3 * 60 * 1000;
   const success = [];
   const error = [];
 
   // Add basic stock information if it doesn't already exist in the database
   if (stock.logo === null) {
+    console.log("Logo is null, getting all of the data.");
     fetch(
       "https://finnhub.io/api/v1/stock/profile2?symbol=" +
         stockTicker +
@@ -49,15 +50,12 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
     )
       .then((response) => response.json())
       .then(async (data) => {
-        await Stocks.update(
-          {
-            companyName: data.name,
-            exchange: data.exchange,
-            sector: data.finnhubIndustry,
-            logo: data.logo,
-          },
-          { where: { ticker: stockTicker } }
-        );
+        stock.update({
+          companyName: data.name,
+          exchange: data.exchange,
+          sector: data.finnhubIndustry,
+          logo: data.logo,
+        });
         success.push({ SuccessCompanyProfileData: data });
       })
       .catch((err) => {
@@ -74,13 +72,10 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
         FinnhubAPIKey
     )
       .then((response) => response.json())
-      .then(async (data) => {
-        await Stocks.update(
-          {
-            currentPrice: data.c,
-          },
-          { where: { ticker: stockTicker } }
-        );
+      .then((data) => {
+        stock.update({
+          currentPrice: data.c,
+        });
         success.push({ SuccessStockQuoteData: data });
       })
       .catch((err) => {
@@ -97,28 +92,34 @@ router.get("/getStockInfo/:ticker", async (req, res) => {
         FinnhubAPIKey
     )
       .then((response) => response.json())
-      .then(async (data) => {
-        await Stocks.update(
-          {
+      .then((data) => {
+        stock
+          .update({
             high52Week: data.metric["52WeekHigh"],
             high52WeekDate: data.metric["52WeekHighDate"],
             low52Week: data.metric["52WeekLow"],
             low52WeekDate: data.metric["52WeekLowDate"],
             peRatio: data.metric.peNormalizedAnnual,
             dividendPerShareAnnual: data.metric.dividendPerShareAnnual,
-          },
-          { where: { ticker: stockTicker } }
-        );
+          })
+          .then((result) => {
+            res.json(result);
+          });
         success.push({ SuccessBasicFinanceData: data });
       })
       .catch((err) => {
         error.push({ ErrorBasicFinanceData: err });
       });
+  } else {
+    res.json(stock);
   }
-  const updatedStock = await Stocks.findOne({
-    where: { ticker: stockTicker },
-  });
-  res.json(updatedStock);
+});
+
+// Get a stock's information.
+router.get("/getStockInfo/:ticker", async (req, res) => {
+  const stockTicker = req.params.ticker;
+  const stock = await Stocks.findOne({ where: { ticker: stockTicker } });
+  res.json(stock);
 });
 
 // Update the stock price at the time of purchase, no time restriction.

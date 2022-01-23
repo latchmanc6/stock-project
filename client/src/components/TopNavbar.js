@@ -6,9 +6,9 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Elements } from "@stripe/react-stripe-js";
 
-import { stripePromise } from "helpers/stripePromise";
-import { AuthContext } from "helpers/AuthContext";
-import { ModalContext } from "helpers/ModalContext";
+import { stripePromise } from "../helpers/stripePromise";
+import { AuthContext } from "../helpers/AuthContext";
+import { ModalContext } from "../helpers/ModalContext";
 import FundModal from "./FundModal";
 
 const TopNavbar = ({ logout }) => {
@@ -41,7 +41,7 @@ const TopNavbar = ({ logout }) => {
 
                   <NavDropdown.Item href="#">Withdraw funds</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#">View transaction</NavDropdown.Item>
+                  <NavDropdown.Item href="#">View transaction history</NavDropdown.Item>
                 </NavDropdown>
               </>
             )}
