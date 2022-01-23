@@ -5,8 +5,8 @@ import { ModalContext } from "../helpers/ModalContext";
 import Modal from "react-bootstrap/Modal";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { Button } from 'components/Styled/style.js';
 
 const FundModal = ({ totalCash, setTotalCash }) => {
   const { modal, amount, depositStatus } = useContext(ModalContext);
@@ -98,7 +98,7 @@ const FundModal = ({ totalCash, setTotalCash }) => {
 
             {/* TODO: Add swirl icon while resolving promise? */}
             <Modal.Footer>
-              <Button variant="primary" disabled={!stripe} type="submit">
+              <Button variant="secondary" disabled={!stripe} type="submit">
                 Confirm deposit
               </Button>
             </Modal.Footer>

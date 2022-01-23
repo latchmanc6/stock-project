@@ -105,7 +105,7 @@ function Trade() {
   }, []);
 
   return (
-    <div>
+    <div className="text-center">
       <SearchBar placeholder="Enter a ticker..." data={searchBarData} />
       <div>
         <img

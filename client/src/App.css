@@ -1,13 +1,27 @@
 /* Google font - Ubuntu */
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap");
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
 .App:not(.newsCard):not(.newsSquare):not(.newsImg) {
-  text-align: center;
+  /* text-align: center; */
 }
 
 body {
   margin: 0;
-  font-family: "Ubuntu", sans-serif;
+  background-color: #f9f8f7;
+  /* font-family: "Ubuntu", sans-serif; */
+  /* font-family: 'Lato', sans-serif; */
+  /* font-family: 'Roboto Condensed', sans-serif; */
+  /* font-family: 'Oswald', sans-serif; */
+  /* font-family: 'Source Sans Pro', sans-serif; */
+  /* font-weight: 500; */
 }
 
 a {

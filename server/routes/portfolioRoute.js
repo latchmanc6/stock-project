@@ -4,6 +4,13 @@ const { Users, StockTransactions, Stocks } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const Sequelize = require("sequelize");
 
+const fetch = require("node-fetch");
+require("dotenv").config();
+
+const FinnhubAPIKey = process.env.FINNHUB_API_KEY;
+const FinnhubSandboxAPIKey = process.env.FINNHUB_SANDBOX_API_KEY;
+const AlphaVantageAPIKey = process.env.ALPHA_VANTAGE_API_KEY;
+
 // const UpdateQuote = require("../helpers/UpdateQuote")
 
 // router.get("/", validateToken, async (req, res) => {
@@ -72,7 +79,7 @@ router.get("/stockList", validateToken, async (req, res) => {
   const { id: UserId } = req.user;
 
   // 1. get stocks and its quantities that user owns
-  const stockList = await StockTransactions.findAll({
+  let stockList = await StockTransactions.findAll({
     where: { UserId },
     attributes: [
       "ticker",
@@ -86,30 +93,54 @@ router.get("/stockList", validateToken, async (req, res) => {
     group: ["ticker"],
   });
 
+  // 2. make api call to get current price
+
+  // const { ticker: stockTicker} = stockList;
+  // console.log(ticker)
+
+  stockList.map(async ({ ticker }) => {
+    const stockInfo = await Stocks.findOne({
+      where: { ticker },
+      attributes: [
+        "ticker",
+        "companyName",
+        "currentPrice",
+        "exchange",
+        "updatedAt",
+      ],
+    }).then((stock) => {
+      const BASE_DATE = new Date(); // set it today
+
+      // if current price hasn't updated today (due to api call limit..)
+      // if (new Date(stock.updatedAt).getDay() !== BASE_DATE.getDay()) {
+        // fetch(
+        //   "https://finnhub.io/api/v1/quote?symbol=" +
+        //     stock.ticker +
+        //     "&token=" +
+        //     FinnhubAPIKey
+        // )
+        //   .then(async (data) => {
+        //     await Stocks.update(
+        //       {
+        //         currentPrice: data.c,
+        //       },
+        //       { where: { ticker } }
+        //     );
+        //     // console.log(data);
+        //     stock.currentPrice = data.c;
+        //   })
+        //   .catch((err) => {
+        //     res.json({ error: err });
+        //   });
+      // }
+      // console.log(stock)
+      console.log('from stock')
+    });
+    console.log('from stockList')
+
+  });
 
   res.json(stockList);
-
-  // 2. make api call to get current price
-  // const stockTicker = req.params.ticker;
-  // fetch(
-  //   "https://finnhub.io/api/v1/quote?symbol=" +
-  //     stockTicker +
-  //     "&token=" +
-  //     FinnhubAPIKey
-  // )
-  //   // .then((response) => response.json())
-  //   .then(async (data) => {
-  //     await Stocks.update(
-  //       {
-  //         currentPrice: data.c,
-  //       },
-  //       { where: { ticker: stockTicker } }
-  //     );
-  //     console.log(data)
-  //   })
-  // .catch((err) => {
-  //   res.json({ error: err });
-  // });
 });
 
 module.exports = router;
