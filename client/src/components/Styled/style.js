@@ -17,8 +17,8 @@ const ButtonBase = styled.button`
   ${(props) => StyledButton[props.size]};
 `;
 
-export const Button = ({ variant, ...rest }) => (
-  <ButtonBase variant={variant} {...rest} />
+export const Button = ({ variant, size, ...rest }) => (
+  <ButtonBase variant={variant} size={size} {...rest} />
 );
 
 /**
@@ -30,8 +30,8 @@ const BoxBase = styled.div`
   ${(props) => StyledBox[props.size]};
 `;
 
-export const BoxRound = ({ variant, ...rest }) => (
-  <BoxRound variant={variant} {...rest} />
+export const BoxRound = ({ size, ...rest }) => (
+  <BoxBase size={size} {...rest} />
 );
   
 /**

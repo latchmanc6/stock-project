@@ -11,8 +11,10 @@ export const baseBox = css`
   align-items: center;
   color: rgb(64, 62, 61);
   font-family: FuturaPT, sans-serif;
+  margin: auto;
+  padding: 50px 20px 50px 20px;
 `;
 
 export const md = css`
-  width: 75%
+  width: 45%
 `;
