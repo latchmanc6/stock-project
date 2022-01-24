@@ -1,4 +1,26 @@
 -----------------------------------------------
+01/23/22
+
+Nari
+1. Done / not done since the last scrum:
+- finished stock list server side implementation for user portfolio
+- created base button and card desgin & setup styled-component
+- finished user fund display 
+2. To do until the next Scrum:
+- finish portfolio table 
+3. Need assistance/figure things out
+- deploy on heruku
+
+Chris
+1. Done / not done since the last scrum:
+- Finished the cron for calculating user asset + store to database
+2. To do until the next Scrum:
+- Add a confirmation pop-up for buy/sell
+- Deploy project to Heroku
+3. Need assistance/figure things out
+- Nothing for now
+
+-----------------------------------------------
 01/21/22
 
 Nari
