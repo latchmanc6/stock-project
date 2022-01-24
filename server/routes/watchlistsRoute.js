@@ -37,6 +37,8 @@ router.get("/", validateToken, async (req, res) => {
           "id",
           "companyName",
           "currentPrice",
+          "change",
+          "percentChange",
           "updatedAt",
         ],
       },
