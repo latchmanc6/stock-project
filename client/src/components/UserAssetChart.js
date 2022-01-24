@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -24,23 +24,27 @@ ChartJS.register(
 );
 
 function UserAssetChart() {
-  let { ticker } = useParams();
-  const [stockChartData, setStockChartData] = useState({});
+  const { authState } = useContext(AuthContext);
+  const userId = authState.id;
+  const [chartData, setChartData] = useState({});
   const [data, setData] = useState({ labels: [], datasets: [] });
 
-  const getChartDataFromAPI = () => {
-    axios
-      .get(`http://localhost:3001/api/stock/getStockChartData/${ticker}`)
+  const getChartDataFromAPI = async () => {
+    console.log(authState);
+    console.log("User ID: " + userId);
+    await axios
+      .get(`http://localhost:3001/api/stock/getUserAssetData/${userId}`)
       .then((response) => {
-        setStockChartData(response.data);
+        console.log(response.data);
+        setChartData(response.data);
       })
       .then(() => {
         setData({
-          labels: getDaysOfStockDataLabel(7),
+          labels: getUserDataLabel(),
           datasets: [
             {
-              label: `${ticker}`,
-              data: getDaysOfStockData(7),
+              label: "Your Asset Progression",
+              data: getUserData(),
               borderColor: "rgb(255, 99, 132)",
               backgroundColor: "rgba(255, 99, 132, 0.5)",
             },
@@ -50,26 +54,53 @@ function UserAssetChart() {
             maintainAspectRatio: false,
           },
         });
+      })
+      .then(() => {
+        //
       });
   };
 
-  const loadMaxChartData = () => {
+  const getUserData = () => {
+    let data = [];
+    if (chartData !== undefined || chartData !== null) {
+      Object.keys(chartData).forEach((key) => {
+        data.push(chartData[key].totalAccountValue);
+      });
+    }
+    return data;
+  };
+
+  const getUserDataLabel = () => {
+    let data = [];
+    if (chartData !== undefined || chartData !== null) {
+      Object.keys(chartData).forEach((key) => {
+        data.push(chartData[key].date);
+      });
+    }
+    return data;
+  };
+
+  const loadChartData = () => {
     setData({
-      labels: getDaysOfStockDataLabel(0),
+      labels: getUserDataLabel(),
       datasets: [
         {
-          label: `${ticker}`,
-          data: getDaysOfStockData(0),
+          label: "Your Asset Progression",
+          data: getUserData(),
           borderColor: "rgb(255, 99, 132)",
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
       ],
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
     });
   };
 
   useEffect(() => {
     getChartDataFromAPI();
-    load1WChartData();
+    loadChartData();
   }, []);
 
   return (
@@ -79,11 +110,11 @@ function UserAssetChart() {
           data={
             data.labels.length === 0
               ? {
-                  labels: getDaysOfStockDataLabel(7),
+                  labels: getUserDataLabel(),
                   datasets: [
                     {
-                      label: `${ticker}`,
-                      data: getDaysOfStockData(7),
+                      label: "Your Asset Progression",
+                      data: getUserData(),
                       borderColor: "rgb(255, 99, 132)",
                       backgroundColor: "rgba(255, 99, 132, 0.5)",
                     },
