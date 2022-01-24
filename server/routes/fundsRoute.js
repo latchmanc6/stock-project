@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { FundTransactions, Users, StockTransactions } = require("../models");
+const { FundTransactions, Users, StockTransactions, UserChartData } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 require("dotenv").config();
@@ -108,6 +108,13 @@ router.post("/getAmountOfStockUserOwns", async (req, res) => {
   });
 
   res.json(availableQuantity);
+});
+
+router.get("/getUserAssetChartData/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  const chartData = await UserChartData.findAll({where: {UserId: userId}});
+  res.json(chartData);
 });
 
 module.exports = router;

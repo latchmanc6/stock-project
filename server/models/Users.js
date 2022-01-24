@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "cascade",
     });
 
+    Users.hasMany(models.UserChartData, {
+      onDelete: "cascade",
+    });
+
     Users.hasMany(models.Watchlists, {
       onDelete: "cascade",
     });
