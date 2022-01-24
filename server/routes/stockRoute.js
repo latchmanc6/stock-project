@@ -75,6 +75,8 @@ router.get("/getStockInfoUpdate/:ticker", async (req, res) => {
       .then((data) => {
         stock.update({
           currentPrice: data.c,
+          change: data.d,
+          percentChange: data.dp,
         });
         success.push({ SuccessStockQuoteData: data });
       })
@@ -136,6 +138,8 @@ router.get("/updateStockPrice/:ticker", async (req, res) => {
       await Stocks.update(
         {
           currentPrice: data.c,
+          change: data.d,
+          percentChange: data.dp,
         },
         { where: { ticker: stockTicker } }
       );
