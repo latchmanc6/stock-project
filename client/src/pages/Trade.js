@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import StockChart from "../components/StockChart";
@@ -28,7 +28,6 @@ function Trade() {
         axios
           .get(`http://localhost:3001/api/stock/getStockInfo/${ticker}`)
           .then((response) => {
-            console.log(response.data);
             setStockData(response.data);
           });
       });
@@ -38,7 +37,6 @@ function Trade() {
     axios
       .get(`http://localhost:3001/api/stock/getStockNews/${ticker}`)
       .then((response) => {
-        console.log(response.data.slice(0, 10));
         setStockNews(response.data.slice(0, 10));
       });
   };
@@ -47,7 +45,6 @@ function Trade() {
     axios
       .get("http://localhost:3001/api/stock/getAllStocks")
       .then((response) => {
-        console.log(response.data);
         setSearchBarData(response.data);
       });
   };
@@ -56,7 +53,6 @@ function Trade() {
     axios
       .get(`http://localhost:3001/api/stock/updateStockPrice/${ticker}`)
       .then((response) => {
-        console.log(response.data);
         setTransactionShareData(response.data);
       });
   };
@@ -66,7 +62,6 @@ function Trade() {
     axios
       .get(`http://localhost:3001/funds/getUserInformation/${userId}`)
       .then((response) => {
-        console.log(response.data);
         setTransactionUserData(response.data);
       });
   };
@@ -117,7 +112,7 @@ function Trade() {
       <div>
         <img
           className="stockLogo"
-          src={stockData.logo}
+          src={stockData.logo === null ? "Default pic" : stockData.logo}
           alt="Company Logo"
         ></img>
         <h1 className="stockHeaderName">{stockData.companyName}</h1>
@@ -177,7 +172,7 @@ function Trade() {
         <div className="col-6">
           <div>
             <span>52 Week High Date: </span>
-            <span>{moment(stockData.high52WeekDate).format("MM/DD/YYYY")}</span>
+            <span>{moment(stockData.high52WeekDate).format("DD/MM/YYYY")}</span>
           </div>
         </div>
       </div>
@@ -191,7 +186,7 @@ function Trade() {
         <div className="col-6">
           <div>
             <span>52 Week Low Date: </span>
-            <span>{moment(stockData.low52WeekDate).format("MM/DD/YYYY")}</span>
+            <span>{moment(stockData.low52WeekDate).format("DD/MM/YYYY")}</span>
           </div>
         </div>
       </div>

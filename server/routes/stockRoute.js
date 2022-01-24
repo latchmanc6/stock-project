@@ -39,9 +39,31 @@ router.get("/getStockInfoUpdate/:ticker", async (req, res) => {
   const success = [];
   const error = [];
 
+  // Update latest stock price for trade page
+  if (new Date() - new Date(stock.updatedAt) > THREE_MIN) {
+    fetch(
+      "https://finnhub.io/api/v1/quote?symbol=" +
+        stockTicker +
+        "&token=" +
+        FinnhubAPIKey
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        stock.update({
+          currentPrice: data.c,
+          change: data.d,
+          percentChange: data.dp,
+        });
+        console.log(data.c);
+        success.push({ SuccessStockQuoteData: data });
+      })
+      .catch((err) => {
+        error.push({ ErrorStockQuoteData: err });
+      });
+  }
+
   // Add basic stock information if it doesn't already exist in the database
   if (stock.logo === null) {
-    console.log("Logo is null, getting all of the data.");
     fetch(
       "https://finnhub.io/api/v1/stock/profile2?symbol=" +
         stockTicker +
@@ -60,28 +82,6 @@ router.get("/getStockInfoUpdate/:ticker", async (req, res) => {
       })
       .catch((err) => {
         error.push({ ErrorCompanyProfileData: err });
-      });
-  }
-
-  // Update latest stock price for trade page
-  if (new Date() - new Date(stock.updatedAt) > THREE_MIN) {
-    fetch(
-      "https://finnhub.io/api/v1/quote?symbol=" +
-        stockTicker +
-        "&token=" +
-        FinnhubAPIKey
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        stock.update({
-          currentPrice: data.c,
-          change: data.d,
-          percentChange: data.dp,
-        });
-        success.push({ SuccessStockQuoteData: data });
-      })
-      .catch((err) => {
-        error.push({ ErrorStockQuoteData: err });
       });
   }
 
@@ -205,6 +205,7 @@ router.get("/getStockNews/:ticker", async (req, res) => {
     });
 });
 
+// Buy a stock, trade page.
 router.post("/buyStock", async (req, res) => {
   const orderData = req.body.data;
   const userData = req.body.userData;
@@ -219,6 +220,7 @@ router.post("/buyStock", async (req, res) => {
   res.json(orderData);
 });
 
+// Sell a stock, trade page.
 router.post("/sellStock", async (req, res) => {
   const orderData = req.body.data;
   const userData = req.body.userData;
@@ -232,5 +234,8 @@ router.post("/sellStock", async (req, res) => {
 
   res.json(orderData);
 });
+
+// Get stock chart data.
+router.get("/getUserAssetData/:userId", async (req, res) => {});
 
 module.exports = router;
