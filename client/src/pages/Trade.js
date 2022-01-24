@@ -113,7 +113,7 @@ function Trade() {
   return (
     <div className="text-center">
       <SearchBar placeholder="Enter a ticker..." data={searchBarData} />
-      <Watchlist ticker={ticker} />
+      <Watchlist stockId={stockData.id} />
       <div>
         <img
           className="stockLogo"

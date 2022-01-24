@@ -3,14 +3,14 @@ import axios from "axios";
 import { Button } from "components/Styled/style.js";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-const Watchlist = ({ ticker }) => {
+const Watchlist = ({ stockId }) => {
   // const [totalCash, setTotalCash] = useState(0);
 
-  const addTowatchlist = (ticker) => {
+  const addTowatchlist = (stockId) => {
     axios
       .post(
-        "http://localhost:3001/watchlists",
-        { ticker },
+        "http://localhost:3001/watchlist",
+        { stockId },
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )
       .then((response) => {
@@ -23,7 +23,7 @@ const Watchlist = ({ ticker }) => {
       <Button
         variant="watchlist"
         onClick={() => {
-          addTowatchlist(ticker);
+          addTowatchlist(stockId);
         }}
       >
         <AiOutlineStar /> Add to watchlist
