@@ -13,6 +13,7 @@ import * as StyledButton from "./StyledButton";
 const ButtonBase = styled.button`
   ${StyledButton.buttonbase};
   ${(props) => StyledButton[props.variant]};
+  ${(props) => StyledButton[props.size]};
 `;
 
 export const Button = ({ variant, ...rest }) => (

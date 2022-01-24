@@ -16,41 +16,31 @@ const Portfolio = () => {
     console.log("from portfolio");
     if (!localStorage.getItem("accessToken")) {
       navigate("/login");
-    } else {
-      
-      // TODO: 3-4 functions
-      // - get table data(stock transaction), funds, watchlist, asset growth?
-      // axios
-      // .get(`http://localhost:3001/portfolio`, {
-      //   headers: { accessToken: localStorage.getItem("accessToken") },
-      // })
-      // axios
-      // .get("http://localhost:3001/funds", {
-      //   headers: { accessToken: localStorage.getItem("accessToken") },
-      // })
-      // .then((response) => {
-      //   console.log(response.data.cash);
-      // });
-    }
+    } 
   }, []);
 
   return (
     <Container>
       <Row>
 
-        <Col md={9}>
+        <Col md={8}>
           <StockList />
         </Col>
 
-        <Col md={3}>
+        <Col md={4}>
           <FundCard />
         </Col>
 
-        <Col md={3}>
+        <Col md={{ span: 4, offset: 8 }}>
           <Watchlist />
         </Col>
 
+      {/* </Row>
+
+      <Row> */}
+
       </Row>
+
     </Container>
   );
 };

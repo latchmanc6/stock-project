@@ -44,3 +44,10 @@ export const watchlist = css`
   text-decoration: none;
   transition: all 100ms linear 0s;
 `;
+
+export const sm = css`
+  font-size: 14px;
+  font-weight: 700;
+  height: 32px;
+  min-width: 80px;
+`;

@@ -49,8 +49,12 @@ const Watchlist = () => {
         {!isWatch ? ' Add to watchlist' : ' Remove from watchlist'}
 
       </Button> */}
-      <h5 className="text-left text-muted">Watchlist</h5>
-      <Button variant="watchlist">Manage</Button>
+      <div className="d-flex justify-content-between">
+        <h5 className="text-left text-muted">Watchlist</h5>
+        <Button variant="watchlist" size="sm">
+          Manage
+        </Button>
+      </div>
       <CardRound>
         {watchlist.map((value) => (
           <Card.Body key={value.id}>
