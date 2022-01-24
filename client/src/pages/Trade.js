@@ -7,7 +7,7 @@ import SearchBar from "../components/SearchBar";
 import BuyModal from "../components/StockTransactionModal/BuyModal";
 import SellModal from "../components/StockTransactionModal/SellModal";
 import { AuthContext } from "../helpers/AuthContext";
-import Watchlist from "components/Watchlist";
+import WatchlistButton from "components/Watchlist/WatchlistButton";
 
 function Trade() {
   let { ticker } = useParams();
@@ -113,7 +113,7 @@ function Trade() {
   return (
     <div className="text-center">
       <SearchBar placeholder="Enter a ticker..." data={searchBarData} />
-      <Watchlist stockId={stockData.id} />
+      <WatchlistButton stockId={stockData.id} />
       <div>
         <img
           className="stockLogo"

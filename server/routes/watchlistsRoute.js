@@ -35,6 +35,7 @@ router.get("/", validateToken, async (req, res) => {
         as: "Stocks",
         attributes: [
           "id",
+          "ticker",
           "companyName",
           "currentPrice",
           "change",

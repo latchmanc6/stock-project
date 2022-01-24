@@ -1,10 +1,25 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "components/Styled/style.js";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-const Watchlist = ({ stockId }) => {
+const WatchlistButton = ({ stockId }) => {
   const [isWatch, setIsWatch] = useState(false);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3001/", {
+  //       headers: { accessToken: localStorage.getItem("accessToken") },
+  //     })
+  //     .then((response) => {
+  //       setListOfPosts(response.data.listOfPosts);
+  //       setLikedPosts(
+  //         response.data.likedPosts.map((like) => {
+  //           return like.PostId;
+  //         })
+  //       );
+  //     });
+  // }, []);
 
   const toggleWatchlist = (stockId) => {
     axios
@@ -14,7 +29,7 @@ const Watchlist = ({ stockId }) => {
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )
       .then((response) => {
-        // console.log(response.data.onWatch);
+        console.log(response.data.onWatch);
         setIsWatch(() => {
           return response.data.onWatch ? true : false
         });
@@ -37,4 +52,4 @@ const Watchlist = ({ stockId }) => {
   );
 };
 
-export default Watchlist;
+export default WatchlistButton;

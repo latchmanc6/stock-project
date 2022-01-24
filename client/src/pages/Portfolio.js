@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 
 import StockList from "components/Portfolio/StockList";
 import FundCard from "components/Portfolio/FundCard";
+import Watchlist from "components/Watchlist/Watchlist";
 
 const Portfolio = () => {
   let navigate = useNavigate();
@@ -43,6 +44,10 @@ const Portfolio = () => {
 
         <Col md={3}>
           <FundCard />
+        </Col>
+
+        <Col md={3}>
+          <Watchlist />
         </Col>
 
       </Row>
