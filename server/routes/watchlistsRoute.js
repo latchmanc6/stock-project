@@ -61,20 +61,16 @@ router.get("/:ticker", validateToken, async (req, res) => {
     where: { ticker },
     attributes: ["id"],
   });
-  console.log(stock.id);
 
-  if (stock) {
-    const found = await Watchlists.findOne({ StockId: stock.id, UserId });
+  const found = await Watchlists.findOne({
+    where: { StockId: stock.id, UserId },
+  });
 
-    if (found) {
-      res.json({ onWatchlist: true });
-    } else {
-      res.json({onWatchlist: false})
-    }
+  if (found) {
+    return res.json({ onWatchlist: true });
   } else {
-    res.json({ error: "stock not found" });
+    return res.json({ onWatchlist: false });
   }
-
 });
 
 module.exports = router;

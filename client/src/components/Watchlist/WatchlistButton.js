@@ -3,23 +3,19 @@ import axios from "axios";
 import { Button } from "components/Styled/style.js";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-const WatchlistButton = ({ stockId }) => {
+const WatchlistButton = ({ ticker, stockId }) => {
   const [isWatch, setIsWatch] = useState(false);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3001/", {
-  //       headers: { accessToken: localStorage.getItem("accessToken") },
-  //     })
-  //     .then((response) => {
-  //       setListOfPosts(response.data.listOfPosts);
-  //       setLikedPosts(
-  //         response.data.likedPosts.map((like) => {
-  //           return like.PostId;
-  //         })
-  //       );
-  //     });
-  // }, []);
+  
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/watchlist/${ticker}`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setIsWatch(response.data.onWatchlist)
+      });
+  }, []);
 
   const toggleWatchlist = (stockId) => {
     axios

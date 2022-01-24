@@ -36,7 +36,7 @@ const FundCard = () => {
       <CardRound>
         <Card.Body>
           <Card.Subtitle className="text-muted">
-            Available to trade
+            Available cash to trade
           </Card.Subtitle>
           <Card.Title>{formatter.format(totalCash)}</Card.Title>
           <Button
