@@ -51,6 +51,8 @@ router.get("/getStockInfoUpdate/:ticker", async (req, res) => {
       .then((data) => {
         stock.update({
           currentPrice: data.c,
+          change: data.d,
+          percentChange: data.dp,
         });
         console.log(data.c);
         success.push({ SuccessStockQuoteData: data });
@@ -136,6 +138,8 @@ router.get("/updateStockPrice/:ticker", async (req, res) => {
       await Stocks.update(
         {
           currentPrice: data.c,
+          change: data.d,
+          percentChange: data.dp,
         },
         { where: { ticker: stockTicker } }
       );
@@ -232,8 +236,6 @@ router.post("/sellStock", async (req, res) => {
 });
 
 // Get stock chart data.
-router.get("/getUserAssetData/:userId", async (req, res) => {
-
-});
+router.get("/getUserAssetData/:userId", async (req, res) => {});
 
 module.exports = router;

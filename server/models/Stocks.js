@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
+      change: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      percentChange: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
       high52Week: {
         type: DataTypes.DECIMAL(10, 2),
       },

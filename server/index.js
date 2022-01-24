@@ -23,6 +23,9 @@ const fundsRouter = require("./routes/fundsRoute");
 app.use("/funds", fundsRouter);
 const portfolioRouter = require("./routes/portfolioRoute");
 app.use("/portfolio", portfolioRouter);
+const watchlistsRouter = require("./routes/watchlistsRoute");
+app.use("/watchlist", watchlistsRouter);
+
 
 // Scheduled tasks
 cron.schedule(
