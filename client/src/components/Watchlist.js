@@ -4,9 +4,9 @@ import { Button } from "components/Styled/style.js";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const Watchlist = ({ stockId }) => {
-  // const [totalCash, setTotalCash] = useState(0);
+  const [isWatch, setIsWatch] = useState(false);
 
-  const addTowatchlist = (stockId) => {
+  const toggleWatchlist = (stockId) => {
     axios
       .post(
         "http://localhost:3001/watchlist",
@@ -14,7 +14,10 @@ const Watchlist = ({ stockId }) => {
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )
       .then((response) => {
-        console.log(response);
+        // console.log(response.data.onWatch);
+        setIsWatch(() => {
+          return response.data.onWatch ? true : false
+        });
       });
   };
 
@@ -23,10 +26,12 @@ const Watchlist = ({ stockId }) => {
       <Button
         variant="watchlist"
         onClick={() => {
-          addTowatchlist(stockId);
+          toggleWatchlist(stockId);
         }}
       >
-        <AiOutlineStar /> Add to watchlist
+        {!isWatch ? <AiOutlineStar /> : <AiFillStar />}
+        {!isWatch ? ' Add to watchlist' : ' Remove from watchlist'}
+
       </Button>
     </>
   );

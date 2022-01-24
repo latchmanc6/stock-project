@@ -13,13 +13,13 @@ router.post("/", validateToken, async (req, res) => {
   });
 
   if (!found) {
-    await Watchlists.create({ Watchlists, UserId });
-    res.json({added: true});
+    await Watchlists.create({ StockId, UserId });
+    res.json({onWatch: true});
   } else {
     await Watchlists.destroy({
-      where: { Watchlists, UserId },
+      where: { StockId, UserId },
     });
-    res.json("Removed from watchlist");
+    res.json({onWatch: false});
   }
 });
 
