@@ -1,6 +1,7 @@
 const express = require("express");
+require("dotenv").config();
+let db;
 const app = express();
-const db = require("./models");
 const cors = require("cors");
 const fetch = require("node-fetch");
 const cron = require("node-cron");
@@ -10,9 +11,9 @@ const { StockTransactions, Users, UserChartData } = require("./models");
 app.use(express.json());
 app.use(cors());
 
-require("dotenv").config();
-
 const FinnhubAPIKey = process.env.FINNHUB_API_KEY;
+
+db = require("./models");
 
 // Routers
 const stockRouter = require("./routes/stockRoute");
@@ -25,7 +26,6 @@ const portfolioRouter = require("./routes/portfolioRoute");
 app.use("/portfolio", portfolioRouter);
 const watchlistsRouter = require("./routes/watchlistsRoute");
 app.use("/watchlist", watchlistsRouter);
-
 
 // Scheduled tasks
 cron.schedule(

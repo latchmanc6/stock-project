@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "Users",
     {
       email: {
-        type: DataTypes.STRING(360),
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: '0'
       },
       address: {
-        type: DataTypes.STRING(300),
+        type: DataTypes.STRING,
       },
       postalCode: {
         type: DataTypes.STRING(6),

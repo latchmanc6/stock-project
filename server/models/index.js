@@ -1,5 +1,5 @@
 'use strict';
-
+require("dotenv").config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -9,17 +9,8 @@ const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 let sequelize;
-console.log(config.use_env_variable);
-console.log("Database URL: " + process.env.DATABASE_URL);
-console.log("Database URL: " + process.env.DB_PRODUCTION_URL);
-if (process.env.DATABASE_URL) {
-  // the application is executed on Heroku ... use the postgres database
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect:  'mysql',
-    protocol: 'mysql'
-  })
-// if (config.use_env_variable) {
-//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
+if (env === 'production') {
+  sequelize = new Sequelize(config.use_env_variable, config);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
