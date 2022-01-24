@@ -1,8 +1,14 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Grid, Container, Typography, Button, TextField } from "@mui/material";
-import { AuthContext } from "../helpers/AuthContext";
+import { Grid, Typography, TextField } from "@mui/material";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import { AuthContext } from "helpers/AuthContext";
+import { Button, BoxRound } from "components/Styled/style.js";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,8 +23,6 @@ function Login() {
     axios.post("http://localhost:3001/auth/login", data).then((response) => {
       if (response.data.error) {
         console.log(response.data.error);
-        // FIXME: display server side errors? 
-
       } else {
         localStorage.setItem("accessToken", response.data.token);
         setAuthState({
@@ -26,32 +30,42 @@ function Login() {
           id: response.data.id,
           status: true,
         });
-        
+
         navigate("/");
       }
     });
   };
 
   return (
-    <Container maxWidth="sm">
-      <Grid container spacing={3}>
+    <Container>
+      <BoxRound size="md" styleß={{ margin: "auto" }}>
+        <Row>
+          <Typography variant="h4">Log in</Typography>
+        </Row>
 
-        <Grid item xs={12}>
-          <Typography variant="h3">Log In</Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          <TextField
-            name="email"
-            label="Email"
+        <FloatingLabel label="Email" className="mb-3">
+          <Form.Control
             type="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          /> 
-        </Grid>
+            className="w-30"
+            placeholder="name@example.com"
+          />
+        </FloatingLabel>
 
-        <Grid item xs={12}>
+        <FloatingLabel label="Password">
+          <Form.Control type="password" placeholder="Password" />
+        </FloatingLabel>
+
+        {/* <Row>
+          <TextField
+              name="email"
+              label="Email"
+              type="email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            /> 
+        </Row>
+
           <TextField
             name="password"
             label="Password"
@@ -60,19 +74,14 @@ function Login() {
               setPassword(e.target.value);
             }}
           />
-        </Grid>
-
-        <Grid item xs={12}>
           <Button 
-            variant="contained" 
+            variant="secondary" 
             type="submit" 
             onClick={login}
           >
             Login
-          </Button>
-        </Grid>
-
-      </Grid>
+          </Button> */}
+      </BoxRound>
     </Container>
   );
 }

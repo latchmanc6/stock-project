@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import * as StyledButton from "./StyledButton";
+import * as StyledBox from "./StyledBox";
 
 /*--------- Button design ----------*/
 
@@ -20,6 +21,19 @@ export const Button = ({ variant, ...rest }) => (
   <ButtonBase variant={variant} {...rest} />
 );
 
+/**
+ * import { BoxRound } from 'components/Styled/style.js';
+ */
+
+const BoxBase = styled.div`
+  ${StyledBox.baseBox};
+  ${(props) => StyledBox[props.size]};
+`;
+
+export const BoxRound = ({ variant, ...rest }) => (
+  <BoxRound variant={variant} {...rest} />
+);
+  
 /**
  * override Bootstrap <Card> component design
  *

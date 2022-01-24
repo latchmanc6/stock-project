@@ -17,6 +17,9 @@ const portfolioRouter = require("./routes/portfolioRoute");
 app.use("/portfolio", portfolioRouter);
 const watchlistsRouter = require("./routes/watchlistsRoute");
 app.use("/watchlist", watchlistsRouter);
+const profileRouter = require("./routes/profileRoute");
+app.use("/profile", profileRouter);
+
 
 
 // Start server.
