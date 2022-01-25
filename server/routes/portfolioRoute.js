@@ -75,23 +75,23 @@ router.get("/stockList", validateToken, async (req, res) => {
   await Promise.all(
     stockList.map(async (stock) => {
       console.log(`==========> fetching current price of : ${stock.ticker}`);
-      // fetch(
-      //   "https://finnhub.io/api/v1/quote?symbol=" +
-      //     stock.ticker +
-      //     "&token=" +
-      //     FinnhubAPIKey
-      // ).then(async (data) => {
-      //   await Stocks.update(
-      //     {
-      //       currentPrice: data.c,
-      //     },
-      //     { where: { ticker: stock.ticker } }
-      //   );
-      //   stock.currentPrice = data.c;
-      // })
-      // .catch((err) => {
-      //   return res.json({error: err});
-      // });
+      fetch(
+        "https://finnhub.io/api/v1/quote?symbol=" +
+          stock.ticker +
+          "&token=" +
+          FinnhubAPIKey
+      ).then(async (data) => {
+        await Stocks.update(
+          {
+            currentPrice: data.c,
+          },
+          { where: { ticker: stock.ticker } }
+        );
+        stock.currentPrice = data.c;
+      })
+      .catch((err) => {
+        return res.json({error: err});
+      });
     })
   );
   res.json(stockList);

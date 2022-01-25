@@ -8,6 +8,7 @@ import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Portfolio from "./pages/Portfolio";
+import Profile from "./pages/Profile";
 
 import TopNavbar from "./components/TopNavbar";
 import { ModalContext } from "./helpers/ModalContext";
@@ -66,6 +67,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/my-portfolio" element={<Portfolio />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </Router>
         </ModalContext.Provider>

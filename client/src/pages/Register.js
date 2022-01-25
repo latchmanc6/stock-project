@@ -40,12 +40,6 @@ const Register = () => {
       navigate("/login");
     });
   };
-  // const onSubmit = (data) => {
-  //   axios.post("http://localhost:3001/auth", data).then((data) => {
-  //     console.log(data);
-  //     navigate("/login");
-  //   });
-  // };
 
   return (
     <Container>

@@ -18,3 +18,6 @@ export const baseBox = css`
 export const md = css`
   width: 45%
 `;
+
+// export const left = css`
+// `

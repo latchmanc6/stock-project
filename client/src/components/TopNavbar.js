@@ -50,9 +50,8 @@ const TopNavbar = ({ logout }) => {
             {authState.status ? (
               <>
                 <NavDropdown title="User" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#">Profile</NavDropdown.Item>
+                  <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                   <NavDropdown.Item href="#"></NavDropdown.Item>
-                  <NavDropdown.Item href="#">Something</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={logout}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
