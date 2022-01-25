@@ -152,18 +152,17 @@ const Register = () => {
                   variant="secondary"
                   type="submit"
                   disabled={isSubmitting}
-                  style={{marginLeft: "22%"}}
+                  style={{ marginLeft: "22%" }}
                 >
                   Submit
                 </Button>
               </Wrapper>
 
               <Wrapper>
-                <span style={{marginLeft: "19%"}}>Have an account?{" "}</span>
+                <span style={{ marginLeft: "19%" }}>Have an account? </span>
                 <Link to={"/login"} style={{ textDecoration: "underline" }}>
                   Log in
                 </Link>
-                <a></a>
               </Wrapper>
             </Form>
           )}

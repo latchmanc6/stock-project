@@ -12,7 +12,24 @@ router.get("/", validateToken, async (req, res) => {
     attributes: { exclude: ["password"] },
   });
   res.json(userInfo);
+});
 
+router.put("/phoneNumber", validateToken, async (req, res) => {
+  const { phone } = req.body;
+  const { id } = req.user;
+
+  await Users.update({ phone }, { where: { id } });
+  res.json(phone);
+});
+
+router.put("/address", validateToken, async (req, res) => {
+  const { address, postalCode } = req.body;
+  const { id } = req.user;
+  console.log(address);
+  console.log(id);
+
+  await Users.update({ address, postalCode }, { where: { id } });
+  res.json({ address, postalCode });
 });
 
 // router.post("/login", async (req, res) => {

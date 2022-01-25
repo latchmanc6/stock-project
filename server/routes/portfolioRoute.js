@@ -33,6 +33,7 @@ const FinnhubAPIKey = process.env.FINNHUB_API_KEY;
 
 router.get("/stockList", validateToken, async (req, res) => {
   const { id: UserId } = req.user;
+  
 
   // 1. get stocks and its quantities that user owns
   const stockList = await StockTransactions.findAll({
