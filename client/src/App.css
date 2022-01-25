@@ -168,11 +168,11 @@ a:hover {
 
 /* ------------------------------------------ Search Bar START ------------------------------------------ */
 
-.searchInputs {
+/* .searchInputs {
   display: flex;
-}
+} */
 
-.search input {
+/* .search input {
   background-color: white;
   border: 0;
   border-radius: 2px;
@@ -182,7 +182,17 @@ a:hover {
   padding: 15px;
   height: 30px;
   width: 300px;
+} */
+
+.searchInput {
+  border-radius: 15px;
+  font-size: 18px;
+  padding: 15px;
+  margin-top: 8px;
+  height: 50px;
+  width: 300px;
 }
+
 
 .searchIcon {
   height: 60px;
@@ -196,10 +206,24 @@ input:focus {
   outline: none;
 }
 .searchIcon svg {
+  margin-top: 7px;
   font-size: 35px;
 }
 
 .dataResult {
+  display: static;
+  position: absolute;
+  width: 300px;
+  right: 100px;
+  top: 50px;
+  overflow: hidden;
+  max-height: 200px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* .dataResult {
   margin-top: 5px;
   width: 300px;
   height: 200px;
@@ -207,7 +231,7 @@ input:focus {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   overflow: hidden;
   overflow-y: auto;
-}
+} */
 
 .dataResult::-webkit-scrollbar {
   display: none;

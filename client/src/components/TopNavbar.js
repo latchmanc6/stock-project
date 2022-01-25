@@ -76,10 +76,7 @@ const TopNavbar = ({ logout }) => {
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={logout}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
-                <SearchBar
-                  placeholder="Enter a ticker..."
-                  data={searchBarData}
-                />
+                  
               </>
             ) : (
               <>
@@ -88,6 +85,13 @@ const TopNavbar = ({ logout }) => {
               </>
             )}
           </Nav>
+
+          {authState.status && (
+            <SearchBar
+              placeholder="Enter a ticker..."
+              data={searchBarData}
+            />
+          )}
         </Navbar.Collapse>
       </Container>
     </StyliedNavbar>
