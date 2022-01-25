@@ -45,7 +45,7 @@ function SellModal(props) {
       UserId: userData.id,
     };
     const order = { data, userData };
-    await axios.post("http://localhost:3001/api/stock/sellStock", order);
+    await axios.post("https://wetrade-stock-project.herokuapp.com/api/stock/sellStock", order);
   };
 
   const onExit = () => {

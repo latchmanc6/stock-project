@@ -23,7 +23,7 @@ function Login() {
   const login = () => {
     const data = { email, password };
 
-    axios.post("http://localhost:3001/auth/login", data).then((response) => {
+    axios.post("https://wetrade-stock-project.herokuapp.com/auth/login", data).then((response) => {
       if (response.data.error) {
         console.log(response.data.error);
         // FIXME: display server side errors?

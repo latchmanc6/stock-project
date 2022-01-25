@@ -8,7 +8,7 @@ const WatchlistButton = ({ ticker, stockId }) => {
   
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/watchlist/${ticker}`, {
+      .get(`https://wetrade-stock-project.herokuapp.com/watchlist/${ticker}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -20,7 +20,7 @@ const WatchlistButton = ({ ticker, stockId }) => {
   const toggleWatchlist = (stockId) => {
     axios
       .post(
-        "http://localhost:3001/watchlist",
+        "https://wetrade-stock-project.herokuapp.com/watchlist",
         { stockId },
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )

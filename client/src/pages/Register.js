@@ -35,10 +35,12 @@ const Register = () => {
   });
 
   const submitForm = (values) => {
-    axios.post("http://localhost:3001/auth", values).then((values) => {
-      console.log(values);
-      navigate("/login");
-    });
+    axios
+      .post("https://wetrade-stock-project.herokuapp.com/auth", values)
+      .then((values) => {
+        console.log(values);
+        navigate("/login");
+      });
   };
 
   return (

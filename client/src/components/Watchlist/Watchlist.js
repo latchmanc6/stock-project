@@ -13,7 +13,7 @@ const Watchlist = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/watchlist", {
+      .get("https://wetrade-stock-project.herokuapp.com/watchlist", {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -25,7 +25,7 @@ const Watchlist = () => {
   const toggleWatchlist = (stockId) => {
     axios
       .post(
-        "http://localhost:3001/watchlist",
+        "https://wetrade-stock-project.herokuapp.com/watchlist",
         { stockId },
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )

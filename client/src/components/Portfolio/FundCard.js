@@ -20,7 +20,7 @@ const FundCard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/funds", {
+      .get("https://wetrade-stock-project.herokuapp.com/funds", {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
