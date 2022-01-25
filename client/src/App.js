@@ -18,6 +18,7 @@ import { ModalContext } from "./helpers/ModalContext";
 function App() {
   // AuthContext Values
   const [authState, setAuthState] = useState({
+    firstName: "",
     email: "",
     id: 0,
     status: false,

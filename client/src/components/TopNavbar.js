@@ -66,7 +66,11 @@ const TopNavbar = ({ logout }) => {
 
             {authState.status ? (
               <>
-                <NavDropdown title="User" id="basic-nav-dropdown">
+                {/* <NavDropdown title="User" id="basic-nav-dropdown"> */}
+                <NavDropdown
+                  title={authState.firstName ? authState.firstName : "User"}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                   <NavDropdown.Item href="#"></NavDropdown.Item>
                   <NavDropdown.Divider />
