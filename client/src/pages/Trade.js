@@ -24,6 +24,10 @@ const BtnWrapper = styled.div`
   margin-top: 30px;
 `;
 
+const StaticsWrapper = styled.div`
+  margin-bottom: 60px;
+`;
+
 function Trade() {
   let { ticker } = useParams();
   const { authState } = useContext(AuthContext);
@@ -198,55 +202,60 @@ function Trade() {
           </BtnWrapper>
         </div>
         <StockChart></StockChart>
-        <h2>Key Statistics</h2>
-        <div className="row">
-          <div className="col-6">
-            <div>
-              <span>Dividend Per Share (Annual): </span>
-              <span>${stockData.dividendPerShareAnnual}</span>
+        
+        <StaticsWrapper>
+
+          <h2>Key Statistics</h2>
+          <div className="row">
+            <div className="col-6">
+              <div>
+                <span>Dividend Per Share (Annual): </span>
+                <span>${stockData.dividendPerShareAnnual}</span>
+              </div>
+            </div>
+            <div className="col-6">
+              <div>
+                <span>PE Ratio: </span>
+                <span>
+                  {stockData.peRatio === null ? "N/A" : stockData.peRatio}
+                </span>
+              </div>
             </div>
           </div>
-          <div className="col-6">
-            <div>
-              <span>PE Ratio: </span>
-              <span>
-                {stockData.peRatio === null ? "N/A" : stockData.peRatio}
-              </span>
+          <div className="row">
+            <div className="col-6">
+              <div>
+                <span>52 Week High: </span>
+                <span>${stockData.high52Week}</span>
+              </div>
+            </div>
+            <div className="col-6">
+              <div>
+                <span>52 Week High Date: </span>
+                <span>
+                  {moment(stockData.high52WeekDate).format("DD/MM/YYYY")}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-6">
-            <div>
-              <span>52 Week High: </span>
-              <span>${stockData.high52Week}</span>
+          <div className="row">
+            <div className="col-6">
+              <div>
+                <span>52 Week Low: </span>
+                <span>${stockData.low52Week}</span>
+              </div>
+            </div>
+            <div className="col-6">
+              <div>
+                <span>52 Week Low Date: </span>
+                <span>
+                  {moment(stockData.low52WeekDate).format("DD/MM/YYYY")}
+                </span>
+              </div>
             </div>
           </div>
-          <div className="col-6">
-            <div>
-              <span>52 Week High Date: </span>
-              <span>
-                {moment(stockData.high52WeekDate).format("DD/MM/YYYY")}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-6">
-            <div>
-              <span>52 Week Low: </span>
-              <span>${stockData.low52Week}</span>
-            </div>
-          </div>
-          <div className="col-6">
-            <div>
-              <span>52 Week Low Date: </span>
-              <span>
-                {moment(stockData.low52WeekDate).format("DD/MM/YYYY")}
-              </span>
-            </div>
-          </div>
-        </div>
+        </StaticsWrapper>
+
         <h2>Related News</h2>
         {stockNews.map((value, key) => {
           return (

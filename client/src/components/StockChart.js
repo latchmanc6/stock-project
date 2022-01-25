@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,6 +23,22 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+const Container = styled.div`
+  margin-bottom: 50px;
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 20px;
+  width: 300px;
+
+  span {
+    font-size: 18px
+  }
+`;
 
 function StockChart() {
   let { ticker } = useParams();
@@ -193,7 +210,7 @@ function StockChart() {
   }, []);
 
   return (
-    <div>
+    <Container>
       <div className="chartContainer">
         <Line
           data={
@@ -219,14 +236,28 @@ function StockChart() {
             maintainAspectRatio: false,
           }}
         />
-        <button onClick={load1WChartData}>1W</button>
-        <button onClick={load1MChartData}>1M</button>
-        <button onClick={load3MChartData}>3M</button>
-        <button onClick={load6MChartData}>6M</button>
-        <button onClick={load1YChartData}>1Y</button>
-        <button onClick={loadMaxChartData}>MAX</button>
+        <BtnWrapper>
+          <button onClick={load1WChartData}>
+            <span>1W</span>
+          </button>
+          <button onClick={load1MChartData}>
+            <span>1M</span>
+          </button>
+          <button onClick={load3MChartData}>
+            <span>3M</span>
+          </button>
+          <button onClick={load6MChartData}>
+            <span>6M</span>
+          </button>
+          <button onClick={load1YChartData}>
+            <span>1Y</span>
+          </button>
+          <button onClick={loadMaxChartData}>
+            <span>MAX</span>
+          </button>
+        </BtnWrapper>
       </div>
-    </div>
+    </Container>
   );
 }
 
