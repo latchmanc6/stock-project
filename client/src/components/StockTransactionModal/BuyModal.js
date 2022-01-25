@@ -77,7 +77,6 @@ function BuyModal(props) {
         
         {!props.orderStatus ? (
           <>
-          
             <Modal.Body>
               <h5>How many shares would you like to buy?</h5>
               <Form.Control
@@ -97,7 +96,7 @@ function BuyModal(props) {
                 type="number"
                 min="1"
               ></input> */}
-              <p className="cost">
+              <p className="modalCost">
                 Estimated cost: $
                 {Number.isNaN(estimatedCost)
                   ? quantity * shareData.currentPrice

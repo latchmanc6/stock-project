@@ -129,6 +129,8 @@ function Trade() {
   const handleSellModalClose = () => {
     setTransactionShareData({});
     setSellModalShow(false);
+    setOrderStatus(false);
+    setTotalCost("");
   };
 
   useEffect(() => {
@@ -188,6 +190,10 @@ function Trade() {
               shareData={transactionShareData}
               userData={transactionUserData}
               availableQuantity={availableQuantity}
+              orderStatus={orderStatus}
+              setOrderStatus={setOrderStatus}
+              totalCost={totalCost}
+              setTotalCost={setTotalCost}
             />
           </BtnWrapper>
         </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import { Button } from "components/Styled/style.js";
 
 function SellModal(props) {
   const shareData = props.shareData;
@@ -45,7 +47,16 @@ function SellModal(props) {
       UserId: userData.id,
     };
     const order = { data, userData };
-    await axios.post("https://wetrade-stock-project.herokuapp.com/api/stock/sellStock", order);
+    await axios
+      .post(
+        "https://wetrade-stock-project.herokuapp.com/api/stock/sellStock",
+        order
+      )
+      .then((response) => {
+        console.log(response.data);
+        props.setOrderStatus(true);
+        props.setTotalCost(response.data.total);
+      });
   };
 
   const onExit = () => {
@@ -64,42 +75,67 @@ function SellModal(props) {
         <Modal.Header closeButton>
           <Modal.Title>Sell {shareData.ticker}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div>How many shares would you like to sell?</div>
-          <input
-            defaultValue="1"
-            onInput={(e) => {
-              calculateTotal(e);
-            }}
-            type="number"
-            min="1"
-          ></input>
-          <div>
-            Estimated total return: $
-            {Number.isNaN(estimatedCost)
-              ? quantity * shareData.currentPrice
-              : estimatedCost}
-          </div>
-          <br />
-          {showError ? (
-            <p className="text-danger">
-              You do not have enough stock to fulfill this transaction.
-            </p>
-          ) : (
-            <p></p>
-          )}
-          <br />
-          <div>
-            {shareData.ticker} shares owned: {availableQuantity}
-          </div>
-          <div>Current Share Price: ${shareData.currentPrice}</div>
-          <br />
-          <Modal.Footer>
-            <button onClick={confirmOrder} className="btn btn-primary">
-              Confirm Order
-            </button>
-          </Modal.Footer>
-        </Modal.Body>
+
+        {!props.orderStatus ? (
+          <>
+            <Modal.Body>
+              <h5>How many shares would you like to sell?</h5>
+              <Form.Control
+                defaultValue="1"
+                type="number"
+                onInput={(e) => {
+                  calculateTotal(e);
+                }}
+                type="number"
+                min="1"
+              />
+              {/* <input
+                defaultValue="1"
+                onInput={(e) => {
+                  calculateTotal(e);
+                }}
+                type="number"
+                min="1"
+              ></input> */}
+              <p className="modalCost">
+                Estimated total return: $
+                {Number.isNaN(estimatedCost)
+                  ? quantity * shareData.currentPrice
+                  : estimatedCost}
+              </p>
+              {showError ? (
+                <p className="text-danger">
+                  You do not have enough stock to fulfill this transaction.
+                </p>
+              ) : (
+                <p></p>
+              )}
+              <br />
+              <p>
+                {shareData.ticker} shares owned: {availableQuantity}
+              </p>
+              <p>Current Share Price: ${shareData.currentPrice}</p>
+              <br />
+              <Modal.Footer>
+                <Button variant="secondary" onClick={confirmOrder}>
+                  Confirm Order
+                </Button>
+              </Modal.Footer>
+            </Modal.Body>
+          </>
+        ) : (
+          <>
+            <Modal.Body>
+              <h4>Your order confirmed!</h4>
+              <p>Total earning is : ${props.totalCost}</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={props.handleSellModalClose}>
+                Done
+              </Button>
+            </Modal.Footer>
+          </>
+        )}
       </Modal>
     </div>
   );

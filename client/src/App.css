@@ -63,6 +63,10 @@ a:hover {
   text-transform: capitalize;
 }
 
+.modalCost {
+  margin-top: 10px;
+}
+
 /* ------------------------------------------ Trade Page START ------------------------------------------ */
 
 .chartContainer {
