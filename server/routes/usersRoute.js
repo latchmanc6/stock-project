@@ -6,10 +6,12 @@ const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.post("/", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, firstName, lastName } = req.body;
 
   bcrypt.hash(password, 10).then((hash) => {
     Users.create({
+      firstName,
+      lastName,
       email,
       password: hash,
     });
@@ -33,7 +35,6 @@ router.post("/login", async (req, res) => {
     .then((match) => {
       if (!match) {
         res.json({ error: "Wrong email and password entered" });
-
       } else {
         const accessToken = sign(
           { email: user.email, id: user.id },

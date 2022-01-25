@@ -46,19 +46,19 @@ function Login() {
         <Typography variant="h3">Log in</Typography>
 
           <Wrapper>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <FloatingLabel label="Email" className="mb-3">
-              <Form.Control
-                name="email"
-                type="email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                placeholder="name@example.com"
-                style={{ width: "300px" }}
-              />
-            </FloatingLabel>
-          </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <FloatingLabel label="Email" className="mb-3">
+                <Form.Control
+                  name="email"
+                  type="email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  placeholder="name@example.com"
+                  style={{ width: "300px" }}
+                />
+              </FloatingLabel>
+            </Form.Group>
 
             <FloatingLabel label="Password">
               <Form.Control
@@ -80,7 +80,7 @@ function Login() {
         </Wrapper>
 
         <Wrapper>
-          Don't have an account?{" "}
+          <span>Don't have an account?{" "}</span>
           <Link to={"/register"} style={{ textDecoration: "underline" }}>
             Sign up
           </Link>
