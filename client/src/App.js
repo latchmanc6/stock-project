@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Portfolio from "./pages/Portfolio";
 import Profile from "./pages/Profile";
+import FundingHistory from "./pages/FundingHistory";
 
 import TopNavbar from "./components/TopNavbar";
 import { ModalContext } from "./helpers/ModalContext";
@@ -70,6 +71,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/my-portfolio" element={<Portfolio />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/transaction-history" element={<FundingHistory />} />
             </Routes>
           </Router>
         </ModalContext.Provider>

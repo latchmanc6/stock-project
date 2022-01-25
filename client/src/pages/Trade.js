@@ -13,7 +13,7 @@ function Trade() {
   let { ticker } = useParams();
   const { authState } = useContext(AuthContext);
   const [stockData, setStockData] = useState({});
-  const [searchBarData, setSearchBarData] = useState({});
+  // const [searchBarData, setSearchBarData] = useState({});
   const [stockNews, setStockNews] = useState([]);
   const [buyModalShow, setBuyModalShow] = useState(false);
   const [sellModalShow, setSellModalShow] = useState(false);
@@ -47,13 +47,13 @@ function Trade() {
       });
   };
 
-  const getAllTickers = () => {
-    axios
-      .get("https://wetrade-stock-project.herokuapp.com/api/stock/getAllStocks")
-      .then((response) => {
-        setSearchBarData(response.data);
-      });
-  };
+  // const getAllTickers = () => {
+  //   axios
+  //     .get("https://wetrade-stock-project.herokuapp.com/api/stock/getAllStocks")
+  //     .then((response) => {
+  //       setSearchBarData(response.data);
+  //     });
+  // };
 
   const getStockTransactionData = () => {
     axios
@@ -115,12 +115,12 @@ function Trade() {
   useEffect(() => {
     getTickerDataFromAPI();
     getStockNews();
-    getAllTickers();
+    // getAllTickers();
   }, []);
 
   return (
     <div className="text-center">
-      <SearchBar placeholder="Enter a ticker..." data={searchBarData} />
+      {/* <SearchBar placeholder="Enter a ticker..." data={searchBarData} /> */}
       <WatchlistButton stockId={stockData.id} ticker={ticker} />
       <div>
         <img
