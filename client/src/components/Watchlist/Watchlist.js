@@ -8,6 +8,14 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import styled from "styled-components";
 
+const ItemWapper = styled.div`
+  border-bottom: 1px solid rgb(230, 228, 227);
+`
+const Container = styled.div`
+  margin-bottom: 10px
+`
+
+
 const Watchlist = () => {
   const [isWatch, setIsWatch] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
@@ -50,39 +58,44 @@ const Watchlist = () => {
         {!isWatch ? ' Add to watchlist' : ' Remove from watchlist'}
 
       </Button> */}
-      <div className="d-flex justify-content-between">
-        <h5 className="text-left text-muted">Watchlist</h5>
-        <Button variant="watchlist" size="sm">
-          Manage
-        </Button>
-      </div>
+      <Container>
+        <div className="d-flex justify-content-between">
+          <h5 className="text-left text-muted">Watchlist</h5>
+          <Button variant="watchlist" size="sm">
+            Manage
+          </Button>
+        </div>
+      </Container>
+
       <CardRound>
         {watchlist.map((value) => (
-          <Card.Body key={value.id}>
-            <Row>
-              <Col>
-                <Card.Title>{value.Stocks.ticker}</Card.Title>
-                <Card.Subtitle className="text-muted">
-                  {value.Stocks.companyName}
-                </Card.Subtitle>
-              </Col>
-              <Col>
-                <Card.Title>{value.Stocks.currentPrice}</Card.Title>
-                <Card.Subtitle className="text-muted">
-                  {value.Stocks.change < 0 ? (
-                    <TiArrowSortedDown
-                      style={{ color: "#b90e0a", fontSize: 18 }}
-                    />
-                  ) : (
-                    <TiArrowSortedUp
-                      style={{ color: "#377674", fontSize: 18 }}
-                    />
-                  )}
-                  {value.Stocks.change} ({value.Stocks.percentChange}%) USD
-                </Card.Subtitle>
-              </Col>
-            </Row>
-          </Card.Body>
+          <ItemWapper>
+            <Card.Body key={value.id}>
+              <Row>
+                <Col xs={6} md={5}>
+                  <Card.Title>{value.Stocks.ticker}</Card.Title>
+                  <Card.Subtitle className="text-muted">
+                    {value.Stocks.companyName}
+                  </Card.Subtitle>
+                </Col>
+                <Col xs={12} md={7}>
+                  <Card.Title>$ {value.Stocks.currentPrice}</Card.Title>
+                  <Card.Subtitle className="text-muted">
+                    {value.Stocks.change < 0 ? (
+                      <TiArrowSortedDown
+                        style={{ color: "#b90e0a", fontSize: 18 }}
+                      />
+                    ) : (
+                      <TiArrowSortedUp
+                        style={{ color: "#377674", fontSize: 18 }}
+                      />
+                    )}
+                    {value.Stocks.change} ({value.Stocks.percentChange}%) USD
+                  </Card.Subtitle>
+                </Col>
+              </Row>
+            </Card.Body>
+          </ItemWapper>
         ))}
       </CardRound>
     </>

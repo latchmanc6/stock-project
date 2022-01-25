@@ -6,7 +6,18 @@ import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "helpers/stripePromise";
 import { ModalContext } from "helpers/ModalContext";
 import FundModal from "components/FundModal";
-import { Button, CardRound } from 'components/Styled/style.js';
+import { Button, CardRound } from "components/Styled/style.js";
+import styled from "styled-components";
+
+const ItemWapper = styled.div`
+  span {
+    padding: 20px 0 20px 10px;
+  }
+  
+  h3 {
+    padding: 20px 0 20px 10px;
+  }
+`;
 
 const FundCard = () => {
   const [totalCash, setTotalCash] = useState(0);
@@ -35,10 +46,14 @@ const FundCard = () => {
       {/* <Card style={{ width: "100%" }}> */}
       <CardRound>
         <Card.Body>
-          <Card.Subtitle className="text-muted">
-            Available cash to trade
-          </Card.Subtitle>
-          <Card.Title>{formatter.format(totalCash)}</Card.Title>
+          <ItemWapper>
+            <Card.Subtitle className="text-muted">
+              <span>Available cash to trade</span>
+            </Card.Subtitle>
+            <Card.Title>
+              <h3>{formatter.format(totalCash)}</h3>
+            </Card.Title>
+          </ItemWapper>
           <Button
             variant="primary"
             onClick={() => {

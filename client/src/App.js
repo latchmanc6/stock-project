@@ -66,7 +66,7 @@ function App() {
             <TopNavbar logout={logout} />
 
             <Routes>
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="/trade/:ticker" element={<Trade />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />

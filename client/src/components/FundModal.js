@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
-import { Button } from 'components/Styled/style.js';
+import { Button } from "components/Styled/style.js";
 
 const FundModal = ({ totalCash, setTotalCash }) => {
   const { modal, amount, depositStatus } = useContext(ModalContext);
@@ -58,14 +58,17 @@ const FundModal = ({ totalCash, setTotalCash }) => {
 
     // Use fetch to send the token ID and any other payment data to your server.
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-    const response = await fetch("https://wetrade-stock-project.herokuapp.com/funds/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accessToken: localStorage.getItem("accessToken"),
-      },
-      body: JSON.stringify(paymentData),
-    });
+    const response = await fetch(
+      "https://wetrade-stock-project.herokuapp.com/funds/add",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken: localStorage.getItem("accessToken"),
+        },
+        body: JSON.stringify(paymentData),
+      }
+    );
 
     // Return and display the result of the charge.
     return response.json();
@@ -109,10 +112,7 @@ const FundModal = ({ totalCash, setTotalCash }) => {
           <Modal.Body>{`You've got $${amountVal} available to trade!`}</Modal.Body>
 
           <Modal.Footer>
-            <Button
-              variant="primary"
-              onClick={handleModalClose}
-            >
+            <Button variant="primary" onClick={handleModalClose}>
               Done
             </Button>
           </Modal.Footer>
