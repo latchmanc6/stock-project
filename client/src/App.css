@@ -55,6 +55,14 @@ a:hover {
   color: rgb(64, 62, 61);
 }
 
+.uppercase {
+  text-transform: uppercase; 
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
 /* ------------------------------------------ Trade Page START ------------------------------------------ */
 
 .chartContainer {
@@ -199,12 +207,9 @@ input:focus {
 .dataItem p {
   margin-left: 10px;
 }
+
 a {
   text-decoration: none;
-}
-
-a:hover {
-  background-color: lightgrey;
 }
 
 #clearBtn {

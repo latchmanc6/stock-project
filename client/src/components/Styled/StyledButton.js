@@ -32,6 +32,11 @@ export const secondary = css`
   color: rgb(64, 62, 61);
 `;
 
+export const cancel = css`
+  color: rgb(64, 62, 61);
+  background: rgb(230, 228, 227);
+`
+
 export const watchlist = css`
   background-color: #f9f8f7;
   color: rgb(55, 118, 116);

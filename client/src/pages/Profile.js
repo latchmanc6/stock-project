@@ -8,14 +8,72 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import { BoxRound, Button } from "components/Styled/style.js";
+import { Button, CardRound } from "components/Styled/style.js";
 
 const Container = styled.div`
-  margin-top: 60px;
+  margin: 60px 20px 60px 20px;
 
-  .text-left {
-    text-algin: left;
+  h4 {
+    margin-left: 30%;
+    color: rgb(64, 62, 61);
+    font-weight: bold;
   }
+
+  h5 {
+    margin: 20px 0 10px 0;
+    color: rgb(64, 62, 61);
+  }
+
+  h6 {
+    color: rgb(64, 62, 61);
+  }
+
+  p,
+  h6 {
+    padding: 20px 0 0 30px;
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  input {
+    margin-left: 30px;
+    width: 100%;
+  }
+
+  .big {
+    margin-left: 30px;
+    margin-bottom: 20px;
+  }
+
+  label {
+    margin-left: 30px;
+  }
+
+  .passHeading {
+    margin-bottom: 20px;
+  }
+
+  .passBtn {
+    margin-top: 20px;
+  }
+
+  .inline {
+    display: flex;
+    justify-content: flex-start;
+  }
+`;
+
+const Card = styled.div`
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 `;
 
 const Profile = () => {
@@ -23,6 +81,11 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+  const [newAddress, setNewAddress] = useState({
+    address: "",
+    postalCode: "",
+  });
   const [showForm, setShowForm] = useState({
     phone: false,
     address: false,
@@ -50,7 +113,7 @@ const Profile = () => {
         .put(
           "http://localhost:3001/profile/phoneNumber",
           {
-            phone: userInfo.phone,
+            phone: newPhone,
           },
           {
             headers: {
@@ -63,7 +126,7 @@ const Profile = () => {
             console.log(response.data.error);
           } else {
             console.log(response.data);
-            setUserInfo({ ...userInfo, phone: userInfo.phone });
+            setUserInfo({ ...userInfo, phone: newPhone });
             setShowForm({ ...showForm, phone: false });
           }
         });
@@ -72,8 +135,8 @@ const Profile = () => {
         .put(
           "http://localhost:3001/profile/address",
           {
-            address: userInfo.address,
-            postalCode: userInfo.postalCode,
+            address: newAddress.address,
+            postalCode: newAddress.postalCode,
           },
           {
             headers: {
@@ -88,8 +151,8 @@ const Profile = () => {
             console.log(response.data);
             setUserInfo({
               ...userInfo,
-              address: userInfo.address,
-              postalCode: userInfo.postalCode,
+              address: newAddress.address,
+              postalCode: newAddress.postalCode,
             });
             setShowForm({ ...showForm, address: false });
           }
@@ -99,7 +162,8 @@ const Profile = () => {
         .put(
           "http://localhost:3001/profile/password",
           {
-            oldPassword, newPassword,
+            oldPassword,
+            newPassword,
           },
           {
             headers: {
@@ -115,7 +179,7 @@ const Profile = () => {
             setShowForm({ ...showForm, password: false });
           }
         });
-      }
+    }
   };
 
   return (
@@ -129,10 +193,10 @@ const Profile = () => {
         <Col md={7}>
           <Typography variant="h5">Personal info</Typography>
 
-          <BoxRound>
+          <CardRound>
             <Row>
               <Col>
-                <Typography variant="h7">Phone Number</Typography>
+                <Typography variant="h6">Phone Number</Typography>
               </Col>
             </Row>
 
@@ -140,14 +204,14 @@ const Profile = () => {
             <Row>
               {!showForm.phone ? (
                 <>
-                  <Col>
+                  <Col xs={12} md={10}>
                     {userInfo.phone ? (
                       <p>{userInfo.phone}</p>
                     ) : (
                       <p>Add your phone number</p>
                     )}
                   </Col>
-                  <Col>
+                  <Col xs={6} md={2}>
                     <Button
                       variant="primary"
                       size="sm"
@@ -159,28 +223,34 @@ const Profile = () => {
                 </>
               ) : (
                 <>
-                  <Col>
+                  <Col xs={12} md={10}>
                     <Form.Group className="mb-3" controlId="formBasicPhone">
                       <FloatingLabel label="Phone number" className="mb-3">
                         <Form.Control
                           name="phone"
                           type="text"
                           onChange={(e) => {
-                            setUserInfo({ ...userInfo, phone: e.target.value });
+                            setNewPhone(e.target.value);
                           }}
                           placeholder="Phone number"
-                          style={{ width: "300px" }}
                         />
                       </FloatingLabel>
                     </Form.Group>
-                  </Col>
-                  <Col>
                     <Button
+                      className="big"
                       variant="primary"
                       type="submit"
                       onClick={() => editUserInfo("phone")}
                     >
                       Submit
+                    </Button>
+
+                    <Button
+                      className="big"
+                      variant="cancel"
+                      onClick={() => setShowForm({ ...showForm, phone: false })}
+                    >
+                      Cancel
                     </Button>
                   </Col>
                 </>
@@ -191,21 +261,26 @@ const Profile = () => {
 
             <Row>
               <Col>
-                <Typography variant="h7">Address</Typography>
+                <Typography variant="h6">Address</Typography>
               </Col>
             </Row>
 
             <Row>
               {!showForm.address ? (
                 <>
-                  <Col>
+                  <Col xs={12} md={10}>
                     {userInfo.address ? (
-                      <p>{userInfo.address}</p>
+                      <>
+                        <div className="inline">
+                          <p className="capitalize">{userInfo.address}</p>
+                          <p className="uppercase">{userInfo.postalCode}</p>
+                        </div>
+                      </>
                     ) : (
                       <p>Add your Address</p>
                     )}
                   </Col>
-                  <Col>
+                  <Col xs={6} md={2}>
                     <Button
                       variant="primary"
                       size="sm"
@@ -219,20 +294,18 @@ const Profile = () => {
                 </>
               ) : (
                 <>
-                  <Col>
+                  <Col xs={10} md={8}>
                     <Form.Group className="mb-3" controlId="formBasicAddress">
                       <FloatingLabel label="Address" className="mb-3">
                         <Form.Control
                           name="address"
                           type="text"
                           onChange={(e) => {
-                            setUserInfo({
-                              ...userInfo,
+                            setNewAddress({
                               address: e.target.value,
                             });
                           }}
                           placeholder="Address"
-                          style={{ width: "300px" }}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -246,47 +319,57 @@ const Profile = () => {
                           name="postalCode"
                           type="text"
                           onChange={(e) => {
-                            setUserInfo({
-                              ...userInfo,
+                            setNewAddress({
                               postalCode: e.target.value,
                             });
                           }}
                           placeholder="Postal code"
-                          style={{ width: "300px" }}
                         />
                       </FloatingLabel>
                     </Form.Group>
-                  </Col>
-                  <Col>
                     <Button
+                      className="big"
                       variant="primary"
                       type="submit"
                       onClick={() => editUserInfo("address")}
                     >
                       Submit
                     </Button>
+                    <Button
+                      className="big"
+                      variant="cancel"
+                      onClick={() =>
+                        setShowForm({ ...showForm, address: false })
+                      }
+                    >
+                      Cancel
+                    </Button>
                   </Col>
                 </>
               )}
             </Row>
-          </BoxRound>
+          </CardRound>
 
           {/* Password */}
 
           <Typography variant="h5">Security</Typography>
-          <BoxRound>
-
+          <CardRound>
             <Row>
-              <Col>
-                <Typography variant="h7">Change password</Typography>
+              <Col xs={12} md={10}>
+                <Typography variant="h6" className="passHeading">
+                  Change password
+                </Typography>
               </Col>
               {!showForm.password ? (
                 <>
-                  <Col>
+                  <Col xs={6} md={2}>
                     <Button
+                      className="passBtn"
                       variant="primary"
                       size="sm"
-                      onClick={() => setShowForm({ ...showForm, password: true })}
+                      onClick={() =>
+                        setShowForm({ ...showForm, password: true })
+                      }
                     >
                       Edit
                     </Button>
@@ -294,12 +377,14 @@ const Profile = () => {
                 </>
               ) : (
                 <>
-                  <Col>
-
+                  <Col xs={10} md={8}>
                     {/* Current Password */}
 
-                    <Form.Group className="mb-3" controlId="formBasicOldPassword">
-                      <FloatingLabel label="Current password" className="mb-3">
+                    <Form.Group
+                      className="mb-3"
+                      controlId="formBasicOldPassword"
+                    >
+                      <FloatingLabel label="Current password" className="mb-3 ">
                         <Form.Control
                           name="oldPassword"
                           type="password"
@@ -307,7 +392,6 @@ const Profile = () => {
                             setOldPassword(e.target.value);
                           }}
                           placeholder="Current password"
-                          style={{ width: "300px" }}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -323,29 +407,32 @@ const Profile = () => {
                             setNewPassword(e.target.value);
                           }}
                           placeholder="New password"
-                          style={{ width: "300px" }}
                         />
                       </FloatingLabel>
                     </Form.Group>
-
-                  </Col>
-                  <Col>
                     <Button
+                      className="big"
                       variant="primary"
                       type="submit"
                       onClick={() => editUserInfo("password")}
                     >
                       Submit
                     </Button>
+                    <Button
+                      className="big"
+                      variant="cancel"
+                      onClick={() =>
+                        setShowForm({ ...showForm, password: false })
+                      }
+                    >
+                      Cancel
+                    </Button>
                   </Col>
                 </>
               )}
             </Row>
-            <Row>
-              
-              
-            </Row>
-          </BoxRound>
+            <Row></Row>
+          </CardRound>
         </Col>
       </Row>
     </Container>
