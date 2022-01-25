@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import { Button } from "components/Styled/style.js";
 
 function BuyModal(props) {
   const shareData = props.shareData;
@@ -44,7 +46,16 @@ function BuyModal(props) {
       UserId: userData.id,
     };
     const order = { data, userData };
-    await axios.post("https://wetrade-stock-project.herokuapp.com/api/stock/buyStock", order);
+    await axios
+      .post(
+        "https://wetrade-stock-project.herokuapp.com/api/stock/buyStock",
+        order
+      )
+      .then((response) => {
+        console.log(response.data)
+        props.setOrderStatus(true);
+        props.setTotalCost(response.data.total)
+      });
   };
 
   const onExit = () => {
@@ -63,40 +74,66 @@ function BuyModal(props) {
         <Modal.Header closeButton>
           <Modal.Title>Buy {shareData.ticker}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div>How many shares would you like to buy?</div>
-          <input
-            defaultValue="1"
-            onInput={(e) => {
-              calculateTotal(e);
-            }}
-            type="number"
-            min="1"
-          ></input>
-          <div>
-            Estimated cost: $
-            {Number.isNaN(estimatedCost)
-              ? quantity * shareData.currentPrice
-              : estimatedCost}
-          </div>
-          <br />
-          {showError ? (
-            <p className="text-danger">
-              You do not have enough funds to fulfill this transaction.
-            </p>
-          ) : (
-            <p></p>
-          )}
-          <br />
-          <div>Your cash: ${userData.cash}</div>
-          <div>Current Share Price: ${shareData.currentPrice}</div>
-          <br />
-          <Modal.Footer>
-            <button onClick={confirmOrder} className="btn btn-primary">
-              Confirm Order
-            </button>
-          </Modal.Footer>
-        </Modal.Body>
+        
+        {!props.orderStatus ? (
+          <>
+          
+            <Modal.Body>
+              <h5>How many shares would you like to buy?</h5>
+              <Form.Control
+                defaultValue="1"
+                type="number"
+                onInput={(e) => {
+                  calculateTotal(e);
+                }}
+                type="number"
+                min="1"
+              />
+              {/* <input
+                defaultValue="1"
+                onInput={(e) => {
+                  calculateTotal(e);
+                }}
+                type="number"
+                min="1"
+              ></input> */}
+              <p className="cost">
+                Estimated cost: $
+                {Number.isNaN(estimatedCost)
+                  ? quantity * shareData.currentPrice
+                  : estimatedCost}
+              </p>
+              {showError ? (
+                <p className="text-danger">
+                  You do not have enough funds to fulfill this transaction.
+                </p>
+              ) : (
+                <p></p>
+              )}
+              <br />
+              <p>Your cash: ${userData.cash}</p>
+              <p>Current Share Price: ${shareData.currentPrice}</p>
+              <br />
+              <Modal.Footer>
+                <Button variant="secondary" onClick={confirmOrder}>
+                  Confirm Order
+                </Button>
+              </Modal.Footer>
+            </Modal.Body>
+          </>
+        ) : (
+          <>
+            <Modal.Body>
+              <h4>Your order confirmed!</h4>
+              <p>Total cost is : ${props.totalCost}</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={props.handleBuyModalClose}>
+                Done
+              </Button>
+            </Modal.Footer>
+          </>
+        )}
       </Modal>
     </div>
   );

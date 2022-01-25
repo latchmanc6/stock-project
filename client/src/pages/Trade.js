@@ -8,6 +8,21 @@ import BuyModal from "../components/StockTransactionModal/BuyModal";
 import SellModal from "../components/StockTransactionModal/SellModal";
 import { AuthContext } from "../helpers/AuthContext";
 import WatchlistButton from "components/Watchlist/WatchlistButton";
+import { Button } from "components/Styled/style.js";
+import styled from "styled-components";
+import Image from "react-bootstrap/Image";
+
+const Container = styled.div`
+  margin: 80px 0 50px 0;
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  width: 180px;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 30px;
+`;
 
 function Trade() {
   let { ticker } = useParams();
@@ -20,6 +35,8 @@ function Trade() {
   const [transactionShareData, setTransactionShareData] = useState({});
   const [transactionUserData, setTransactionUserData] = useState({});
   const [availableQuantity, setAvailableQuantity] = useState(0);
+  const [orderStatus, setOrderStatus] = useState(false);
+  const [totalCost, setTotalCost] = useState("");
 
   const getTickerDataFromAPI = async () => {
     await axios
@@ -99,6 +116,8 @@ function Trade() {
   const handleBuyModalClose = () => {
     setTransactionShareData({});
     setBuyModalShow(false);
+    setOrderStatus(false);
+    setTotalCost("");
   };
 
   const handleSellModalShow = () => {
@@ -119,120 +138,140 @@ function Trade() {
   }, []);
 
   return (
-    <div className="text-center">
-      {/* <SearchBar placeholder="Enter a ticker..." data={searchBarData} /> */}
-      <WatchlistButton stockId={stockData.id} ticker={ticker} />
-      <div>
-        <img
-          className="stockLogo"
-          src={stockData.logo === null ? "Default pic" : stockData.logo}
-          alt="Company Logo"
-        ></img>
-        <h1 className="stockHeaderName">{stockData.companyName}</h1>
-        <h1 className="stockHeaderTicker">{stockData.ticker}</h1>
-      </div>
-      <div>
-        <p>{stockData.exchange}</p>
-        <p>{stockData.sector}</p>
-      </div>
-      <div>
-        <h2>${stockData.currentPrice}</h2>
-        <button onClick={handleBuyModalShow} className="btn btn-primary">
-          Buy
-        </button>
-        <BuyModal
-          buyModalShow={buyModalShow}
-          handleBuyModalClose={handleBuyModalClose}
-          shareData={transactionShareData}
-          userData={transactionUserData}
-        />
-        <button onClick={handleSellModalShow} className="btn btn-danger">
-          Sell
-        </button>
-        <SellModal
-          sellModalShow={sellModalShow}
-          handleSellModalClose={handleSellModalClose}
-          shareData={transactionShareData}
-          userData={transactionUserData}
-          availableQuantity={availableQuantity}
-        />
-      </div>
-      <StockChart></StockChart>
-      <h2>Key Statistics</h2>
-      <div className="row">
-        <div className="col-6">
-          <div>
-            <span>Dividend Per Share (Annual): </span>
-            <span>${stockData.dividendPerShareAnnual}</span>
-          </div>
+    <Container>
+      <div className="text-center">
+        {/* <SearchBar placeholder="Enter a ticker..." data={searchBarData} /> */}
+        <WatchlistButton stockId={stockData.id} ticker={ticker} />
+        <div className="companyWrapper">
+          <Image
+            roundedCircle
+            className="stockLogo"
+            src={stockData.logo === null ? "Default pic" : stockData.logo}
+            alt="Company Logo"
+          ></Image>
+          <h1 className="stockHeaderName">{stockData.companyName}</h1>
+          <h1 className="stockHeaderTicker">{stockData.ticker}</h1>
         </div>
-        <div className="col-6">
-          <div>
-            <span>PE Ratio: </span>
-            <span>
-              {stockData.peRatio === null ? "N/A" : stockData.peRatio}
-            </span>
-          </div>
+        <div className="stockInfo">
+          <h6>{stockData.exchange} | </h6>
+          <h6>{stockData.sector}</h6>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-6">
-          <div>
-            <span>52 Week High: </span>
-            <span>${stockData.high52Week}</span>
-          </div>
+        <div>
+          <h2>${stockData.currentPrice}</h2>
+
+          <BtnWrapper>
+            <Button variant="primary" size="sm" onClick={handleBuyModalShow}>
+              Buy
+            </Button>
+            {/* <button onClick={handleBuyModalShow} className="btn btn-primary">
+              Buy
+            </button> */}
+            <BuyModal
+              buyModalShow={buyModalShow}
+              handleBuyModalClose={handleBuyModalClose}
+              shareData={transactionShareData}
+              userData={transactionUserData}
+              orderStatus={orderStatus}
+              setOrderStatus={setOrderStatus}
+              totalCost={totalCost}
+              setTotalCost={setTotalCost}
+            />
+            <Button variant="primary" size="sm" onClick={handleSellModalShow}>
+              Sell
+            </Button>
+            {/* <button onClick={handleSellModalShow} className="btn btn-danger">
+              Sell
+            </button> */}
+            <SellModal
+              sellModalShow={sellModalShow}
+              handleSellModalClose={handleSellModalClose}
+              shareData={transactionShareData}
+              userData={transactionUserData}
+              availableQuantity={availableQuantity}
+            />
+          </BtnWrapper>
         </div>
-        <div className="col-6">
-          <div>
-            <span>52 Week High Date: </span>
-            <span>{moment(stockData.high52WeekDate).format("DD/MM/YYYY")}</span>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-6">
-          <div>
-            <span>52 Week Low: </span>
-            <span>${stockData.low52Week}</span>
-          </div>
-        </div>
-        <div className="col-6">
-          <div>
-            <span>52 Week Low Date: </span>
-            <span>{moment(stockData.low52WeekDate).format("DD/MM/YYYY")}</span>
-          </div>
-        </div>
-      </div>
-      <h2>Related News</h2>
-      {stockNews.map((value, key) => {
-        return (
-          <div key={key} className="newsCard">
-            <div className="newsSquare">
-              <img className="newsImg" src={value.image} alt="Company News" />
-              <div className="newsHeadline">
-                {value.headline.length > 72
-                  ? value.headline.slice(0, 69) + "..."
-                  : value.headline}
-              </div>
-              <p className="newsSummary">
-                {value.summary.length > 280
-                  ? value.summary.slice(0, 277) + "..."
-                  : value.summary}
-              </p>
-              <div>
-                <a
-                  href={value.url}
-                  target="_"
-                  className="newsButton btn btn-primary"
-                >
-                  Read More
-                </a>
-              </div>
+        <StockChart></StockChart>
+        <h2>Key Statistics</h2>
+        <div className="row">
+          <div className="col-6">
+            <div>
+              <span>Dividend Per Share (Annual): </span>
+              <span>${stockData.dividendPerShareAnnual}</span>
             </div>
           </div>
-        );
-      })}
-    </div>
+          <div className="col-6">
+            <div>
+              <span>PE Ratio: </span>
+              <span>
+                {stockData.peRatio === null ? "N/A" : stockData.peRatio}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <div>
+              <span>52 Week High: </span>
+              <span>${stockData.high52Week}</span>
+            </div>
+          </div>
+          <div className="col-6">
+            <div>
+              <span>52 Week High Date: </span>
+              <span>
+                {moment(stockData.high52WeekDate).format("DD/MM/YYYY")}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <div>
+              <span>52 Week Low: </span>
+              <span>${stockData.low52Week}</span>
+            </div>
+          </div>
+          <div className="col-6">
+            <div>
+              <span>52 Week Low Date: </span>
+              <span>
+                {moment(stockData.low52WeekDate).format("DD/MM/YYYY")}
+              </span>
+            </div>
+          </div>
+        </div>
+        <h2>Related News</h2>
+        {stockNews.map((value, key) => {
+          return (
+            <div key={key} className="newsCard">
+              <div className="newsSquare">
+                <img className="newsImg" src={value.image} alt="Company News" />
+                <div className="newsHeadline">
+                  {value.headline.length > 72
+                    ? value.headline.slice(0, 69) + "..."
+                    : value.headline}
+                </div>
+                <p className="newsSummary">
+                  {value.summary.length > 280
+                    ? value.summary.slice(0, 277) + "..."
+                    : value.summary}
+                </p>
+                <div>
+                  <a
+                    href={value.url}
+                    target="_"
+                    className="newsButton btn btn-primary"
+                  >
+                    Read More
+                  </a>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </Container>
   );
 }
 

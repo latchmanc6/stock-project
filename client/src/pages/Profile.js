@@ -97,7 +97,7 @@ const Profile = () => {
       navigate("/login");
     } else {
       axios
-        .get("http://localhost:3001/profile", {
+        .get("https://wetrade-stock-project.herokuapp.com/profile", {
           headers: { accessToken: localStorage.getItem("accessToken") },
         })
         .then((response) => {
@@ -111,7 +111,7 @@ const Profile = () => {
     if (option === "phone") {
       axios
         .put(
-          "http://localhost:3001/profile/phoneNumber",
+          "https://wetrade-stock-project.herokuapp.com/profile/phoneNumber",
           {
             phone: newPhone,
           },
@@ -133,7 +133,7 @@ const Profile = () => {
     } else if (option === "address") {
       axios
         .put(
-          "http://localhost:3001/profile/address",
+          "https://wetrade-stock-project.herokuapp.com/profile/address",
           {
             address: newAddress.address,
             postalCode: newAddress.postalCode,
@@ -160,7 +160,7 @@ const Profile = () => {
     } else if (option === "password") {
       axios
         .put(
-          "http://localhost:3001/profile/password",
+          "https://wetrade-stock-project.herokuapp.com/profile/password",
           {
             oldPassword,
             newPassword,

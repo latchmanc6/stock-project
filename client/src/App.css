@@ -73,9 +73,22 @@ a:hover {
   margin: 0 auto;
 }
 
+.companyWrapper {
+  margin-top: 30px;
+}
+
+.stockInfo {
+  width: 300px;
+  display: flex;
+  margin: 10px auto;
+  justify-content: space-between;
+
+}
+
 .stockLogo {
-  height: 100px;
-  width: 100px;
+  height: auto;
+  width: 60px;
+  margin-right: 20px;
 }
 
 .stockHeaderName {
