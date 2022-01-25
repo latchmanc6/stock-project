@@ -242,4 +242,28 @@ router.get("/getUserAssetData/:userId", async (req, res) => {
   res.json(userChartData);
 });
 
+router.get("/getUserAssetData/:userId", async (req, res) => {
+  const stockTicker = req.params.ticker;
+  let stock = await Stocks.findOne({ where: { ticker: stockTicker } });
+  fetch(
+    "https://finnhub.io/api/v1/quote?symbol=" +
+      stockTicker +
+      "&token=" +
+      FinnhubAPIKey
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      stock.update({
+        currentPrice: data.c,
+        change: data.d,
+        percentChange: data.dp,
+      });
+      res.json(stock);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+
 module.exports = router;

@@ -126,17 +126,18 @@ a:hover {
 }
 
 .newsImg {
-  clip: rect(0px, 460px, 220px, 0px);
+  /* clip: rect(0px, 460px, 220px, 0px); */
+  height: 220px;
   border-radius: 4px;
-  position: absolute;
+  /* position: absolute; */
   max-width: 100%;
-  height: auto;
+  /* height: auto; */
 }
 
 .newsHeadline {
   margin: auto;
   text-align: left;
-  margin-top: 240px;
+  margin-top: 20px;
   padding-left: 30px;
   font-size: 24px;
 }
@@ -214,7 +215,7 @@ input:focus {
   display: static;
   position: absolute;
   width: 300px;
-  right: 100px;
+  right: 19%;
   top: 50px;
   overflow: hidden;
   max-height: 200px;

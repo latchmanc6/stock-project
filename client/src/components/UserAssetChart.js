@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -24,16 +23,18 @@ ChartJS.register(
 );
 
 function UserAssetChart() {
-  const { authState } = useContext(AuthContext);
-  const userId = authState.id;
   const [chartData, setChartData] = useState({});
+  const [userData, setUserData] = useState({});
   const [data, setData] = useState({ labels: [], datasets: [] });
 
   const getChartDataFromAPI = async () => {
-    console.log(authState);
-    console.log("User ID: " + userId);
     await axios
-      .get(`https://wetrade-stock-project.herokuapp.com/api/stock/getUserAssetData/${userId}`)
+      .get(
+        "https://wetrade-stock-project.herokuapp.com/funds/getUserAssetChartData",
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         setChartData(response.data);
@@ -52,11 +53,28 @@ function UserAssetChart() {
           options: {
             responsive: true,
             maintainAspectRatio: false,
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                    min: 0,
+                  },
+                },
+              ],
+            },
           },
         });
       })
-      .then(() => {
-        //
+      .then(() => {});
+
+      axios
+      .get("https://wetrade-stock-project.herokuapp.com/profile", {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setUserData(response.data);
       });
   };
 
@@ -94,6 +112,16 @@ function UserAssetChart() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+                min: 0,
+              },
+            },
+          ],
+        },
       },
     });
   };
@@ -122,6 +150,16 @@ function UserAssetChart() {
                   options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    scales: {
+                      yAxes: [
+                        {
+                          ticks: {
+                            beginAtZero: true,
+                            min: 0,
+                          },
+                        },
+                      ],
+                    },
                   },
                 }
               : data

@@ -11,6 +11,7 @@ import WatchlistButton from "components/Watchlist/WatchlistButton";
 import { Button } from "components/Styled/style.js";
 import styled from "styled-components";
 import Image from "react-bootstrap/Image";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   margin: 80px 0 50px 0;
@@ -41,6 +42,7 @@ function Trade() {
   const [availableQuantity, setAvailableQuantity] = useState(0);
   const [orderStatus, setOrderStatus] = useState(false);
   const [totalCost, setTotalCost] = useState("");
+  let navigate = useNavigate();
 
   const getTickerDataFromAPI = async () => {
     await axios
@@ -93,6 +95,7 @@ function Trade() {
         `https://wetrade-stock-project.herokuapp.com/funds/getUserInformation/${userId}`
       )
       .then((response) => {
+        console.log(response.data);
         setTransactionUserData(response.data);
       });
   };
@@ -138,6 +141,9 @@ function Trade() {
   };
 
   useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/login");
+    }
     getTickerDataFromAPI();
     getStockNews();
     // getAllTickers();
@@ -156,7 +162,7 @@ function Trade() {
             alt="Company Logo"
           ></Image>
           <h1 className="stockHeaderName">{stockData.companyName}</h1>
-          <h1 className="stockHeaderTicker">{stockData.ticker}</h1>
+          {/* <h1 className="stockHeaderTicker">{stockData.ticker}</h1> */}
         </div>
         <div className="stockInfo">
           <h6>{stockData.exchange}</h6>

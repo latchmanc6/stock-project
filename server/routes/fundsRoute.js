@@ -110,17 +110,17 @@ router.post("/getAmountOfStockUserOwns", async (req, res) => {
   res.json(availableQuantity);
 });
 
-router.get("/getUserAssetChartData/:userId", async (req, res) => {
-  const userId = req.params.userId;
+router.get("/getUserAssetChartData", validateToken, async (req, res) => {
+  const { id } = req.user;
 
-  const chartData = await UserChartData.findAll({where: {UserId: userId}});
+  const chartData = await UserChartData.findAll({where: {UserId: id}});
   res.json(chartData);
 });
 
-router.get("/getUserTransactionHistory/:userId", async (req, res) => {
-  const userId = req.params.userId;
+router.get("/getUserTransactionHistory", validateToken, async (req, res) => {
+  const { id } = req.user;
 
-  const fundTransactions = await FundTransactions.findAll({where: {UserId: userId}});
+  const fundTransactions = await FundTransactions.findAll({where: {UserId: id}});
   res.json(fundTransactions);
 });
 
