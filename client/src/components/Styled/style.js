@@ -64,3 +64,17 @@ export const TableRound = styled.table.attrs({
   box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
   width: 100%;
 `;
+
+/**
+ * override Bootstrap <Navbar> component design
+ *
+ * import { StyliedNavbar } from 'components/Styled/style.js';
+ */
+
+export const StyliedNavbar = styled.nav.attrs({
+  className: "navbar navbar-expand-lg"
+})`
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
+  height: 75px;
+`

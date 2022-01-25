@@ -10,6 +10,7 @@ import { stripePromise } from "../helpers/stripePromise";
 import { AuthContext } from "../helpers/AuthContext";
 import { ModalContext } from "../helpers/ModalContext";
 import FundModal from "./FundModal";
+import { StyliedNavbar } from 'components/Styled/style.js';
 
 const TopNavbar = ({ logout }) => {
   const { authState } = useContext(AuthContext);
@@ -17,7 +18,7 @@ const TopNavbar = ({ logout }) => {
   const [showModal, setModalShow] = modal;
 
   return (
-    <Navbar bg="light" expand="lg" variant="light">
+    <StyliedNavbar bg="light" expand="lg" variant="light">
       <Container>
         <Navbar.Brand href="/">WeTrade</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -65,7 +66,7 @@ const TopNavbar = ({ logout }) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </StyliedNavbar>
   );
 };
 
