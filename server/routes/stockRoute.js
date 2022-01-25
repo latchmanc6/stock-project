@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Stocks, StockTransactions, Users } = require("../models");
+const { Stocks, StockTransactions, Users, UserChartData } = require("../models");
 const fetch = require("node-fetch");
 const moment = require("moment");
 
@@ -236,6 +236,10 @@ router.post("/sellStock", async (req, res) => {
 });
 
 // Get stock chart data.
-router.get("/getUserAssetData/:userId", async (req, res) => {});
+router.get("/getUserAssetData/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const userChartData = await UserChartData.findAll({where: {UserId: userId}});
+  res.json(userChartData);
+});
 
 module.exports = router;

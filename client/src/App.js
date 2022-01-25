@@ -4,6 +4,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import Home from "./pages/Home";
 import Trade from "./pages/Trade";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -63,6 +64,7 @@ function App() {
             <TopNavbar logout={logout} />
 
             <Routes>
+              <Route path="/home" element={<Home />} />
               <Route path="/trade/:ticker" element={<Trade />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
