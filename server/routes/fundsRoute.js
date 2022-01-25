@@ -117,4 +117,11 @@ router.get("/getUserAssetChartData/:userId", async (req, res) => {
   res.json(chartData);
 });
 
+router.get("/getUserTransactionHistory/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  const fundTransactions = await FundTransactions.findAll({where: {UserId: userId}});
+  res.json(fundTransactions);
+});
+
 module.exports = router;

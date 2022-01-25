@@ -33,7 +33,7 @@ function UserAssetChart() {
     console.log(authState);
     console.log("User ID: " + userId);
     await axios
-      .get(`http://localhost:3001/api/stock/getUserAssetData/${userId}`)
+      .get(`https://wetrade-stock-project.herokuapp.com/api/stock/getUserAssetData/${userId}`)
       .then((response) => {
         console.log(response.data);
         setChartData(response.data);

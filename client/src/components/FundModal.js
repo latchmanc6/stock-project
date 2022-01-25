@@ -58,7 +58,7 @@ const FundModal = ({ totalCash, setTotalCash }) => {
 
     // Use fetch to send the token ID and any other payment data to your server.
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-    const response = await fetch("http://localhost:3001/funds/add", {
+    const response = await fetch("https://wetrade-stock-project.herokuapp.com/funds/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

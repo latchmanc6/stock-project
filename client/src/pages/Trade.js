@@ -23,10 +23,14 @@ function Trade() {
 
   const getTickerDataFromAPI = async () => {
     await axios
-      .get(`http://localhost:3001/api/stock/getStockInfoUpdate/${ticker}`)
+      .get(
+        `https://wetrade-stock-project.herokuapp.com/api/stock/getStockInfoUpdate/${ticker}`
+      )
       .then(() => {
         axios
-          .get(`http://localhost:3001/api/stock/getStockInfo/${ticker}`)
+          .get(
+            `https://wetrade-stock-project.herokuapp.com/api/stock/getStockInfo/${ticker}`
+          )
           .then((response) => {
             setStockData(response.data);
           });
@@ -35,7 +39,9 @@ function Trade() {
 
   const getStockNews = () => {
     axios
-      .get(`http://localhost:3001/api/stock/getStockNews/${ticker}`)
+      .get(
+        `https://wetrade-stock-project.herokuapp.com/api/stock/getStockNews/${ticker}`
+      )
       .then((response) => {
         setStockNews(response.data.slice(0, 10));
       });
@@ -43,7 +49,7 @@ function Trade() {
 
   const getAllTickers = () => {
     axios
-      .get("http://localhost:3001/api/stock/getAllStocks")
+      .get("https://wetrade-stock-project.herokuapp.com/api/stock/getAllStocks")
       .then((response) => {
         setSearchBarData(response.data);
       });
@@ -51,7 +57,9 @@ function Trade() {
 
   const getStockTransactionData = () => {
     axios
-      .get(`http://localhost:3001/api/stock/updateStockPrice/${ticker}`)
+      .get(
+        `https://wetrade-stock-project.herokuapp.com/api/stock/updateStockPrice/${ticker}`
+      )
       .then((response) => {
         setTransactionShareData(response.data);
       });
@@ -60,7 +68,9 @@ function Trade() {
   const getUserTransactionData = () => {
     const userId = authState.id;
     axios
-      .get(`http://localhost:3001/funds/getUserInformation/${userId}`)
+      .get(
+        `https://wetrade-stock-project.herokuapp.com/funds/getUserInformation/${userId}`
+      )
       .then((response) => {
         setTransactionUserData(response.data);
       });
@@ -72,7 +82,10 @@ function Trade() {
       ticker: ticker,
     };
     axios
-      .post("http://localhost:3001/funds/getAmountOfStockUserOwns", data)
+      .post(
+        "https://wetrade-stock-project.herokuapp.com/funds/getAmountOfStockUserOwns",
+        data
+      )
       .then((response) => {
         setAvailableQuantity(response.data);
       });
@@ -196,8 +209,16 @@ function Trade() {
           <div key={key} className="newsCard">
             <div className="newsSquare">
               <img className="newsImg" src={value.image} alt="Company News" />
-              <div className="newsHeadline">{value.headline.length > 72 ? value.headline.slice(0, 69) + "..." : value.headline}</div>
-              <p className="newsSummary">{value.summary.length > 280 ? value.summary.slice(0, 277) + "..." : value.summary}</p>
+              <div className="newsHeadline">
+                {value.headline.length > 72
+                  ? value.headline.slice(0, 69) + "..."
+                  : value.headline}
+              </div>
+              <p className="newsSummary">
+                {value.summary.length > 280
+                  ? value.summary.slice(0, 277) + "..."
+                  : value.summary}
+              </p>
               <div>
                 <a
                   href={value.url}

@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/token", {
+      .get("https://wetrade-stock-project.herokuapp.com/auth/token", {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {

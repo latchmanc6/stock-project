@@ -30,7 +30,9 @@ function StockChart() {
 
   const getChartDataFromAPI = () => {
     axios
-      .get(`http://localhost:3001/api/stock/getStockChartData/${ticker}`)
+      .get(
+        `https://wetrade-stock-project.herokuapp.com/api/stock/getStockChartData/${ticker}`
+      )
       .then((response) => {
         setStockChartData(response.data);
       })

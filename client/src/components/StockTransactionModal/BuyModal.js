@@ -44,7 +44,7 @@ function BuyModal(props) {
       UserId: userData.id,
     };
     const order = { data, userData };
-    await axios.post("http://localhost:3001/api/stock/buyStock", order);
+    await axios.post("https://wetrade-stock-project.herokuapp.com/api/stock/buyStock", order);
   };
 
   const onExit = () => {

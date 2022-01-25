@@ -23,7 +23,7 @@ const StockList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/portfolio/stockList", {
+      .get("https://wetrade-stock-project.herokuapp.com/portfolio/stockList", {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {

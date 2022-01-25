@@ -35,10 +35,12 @@ const Register = () => {
   });
 
   const submitForm = (values) => {
-    axios.post("http://localhost:3001/auth", values).then((values) => {
-      console.log(values);
-      navigate("/login");
-    });
+    axios
+      .post("https://wetrade-stock-project.herokuapp.com/auth", values)
+      .then((values) => {
+        console.log(values);
+        navigate("/login");
+      });
   };
 
   return (
@@ -152,14 +154,14 @@ const Register = () => {
                   variant="secondary"
                   type="submit"
                   disabled={isSubmitting}
-                  style={{marginLeft: "22%"}}
+                  style={{ marginLeft: "22%" }}
                 >
                   Submit
                 </Button>
               </Wrapper>
 
               <Wrapper>
-                <span style={{marginLeft: "19%"}}>Have an account?{" "}</span>
+                <span style={{ marginLeft: "19%" }}>Have an account? </span>
                 <Link to={"/login"} style={{ textDecoration: "underline" }}>
                   Log in
                 </Link>
