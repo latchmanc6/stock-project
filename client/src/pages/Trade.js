@@ -159,7 +159,7 @@ function Trade() {
           <h1 className="stockHeaderTicker">{stockData.ticker}</h1>
         </div>
         <div className="stockInfo">
-          <h6>{stockData.exchange} | </h6>
+          <h6>{stockData.exchange}</h6>
           <h6>{stockData.sector}</h6>
         </div>
         <div>

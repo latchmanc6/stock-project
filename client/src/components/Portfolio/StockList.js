@@ -27,6 +27,10 @@ const StyledTable = styled.table`
     border-bottom: 1px solid rgb(230, 228, 227);
   }
 
+  .point {
+    cursor: pointer;
+  }
+
 `;
 
 const StockList = () => {
@@ -56,6 +60,11 @@ const StockList = () => {
       });
   }, []);
 
+  const routeStockPage = (ticker) =>{ 
+    console.log('click')
+    navigate(`/trade/${ticker}`);
+  }
+
   return (
     <div>
       <h5 className="text-left text-muted">Your portfolio</h5>
@@ -71,7 +80,7 @@ const StockList = () => {
         <tbody>
           {stockList.map((value, key) => {
             return (
-              <tr key={key}>
+              <tr key={key} className="point" onClick={() => routeStockPage(value.ticker)}>
                 <td>
                   <h5>{value.ticker}</h5>
                   <span className="text-muted">{value.Stocks.companyName}</span>

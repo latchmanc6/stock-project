@@ -15,14 +15,13 @@ const ItemWapper = styled.div`
   .point {
     cursor: pointer;
   }
-`
+`;
 const Container = styled.div`
-  margin-bottom: 10px
-`
-
+  margin-bottom: 10px;
+`;
 
 const Watchlist = () => {
-  let navigate = useNavigate(); 
+  let navigate = useNavigate();
 
   const [isWatch, setIsWatch] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
@@ -53,10 +52,10 @@ const Watchlist = () => {
       });
   };
 
-  const routeStockPage = (ticker) =>{ 
-    console.log('click')
+  const routeStockPage = (ticker) => {
+    console.log("click");
     navigate(`/trade/${ticker}`);
-  }
+  };
 
   return (
     <>
@@ -82,7 +81,10 @@ const Watchlist = () => {
       <CardRound>
         {watchlist.map((value) => (
           <ItemWapper>
-            <Card.Body key={value.id} onClick={() => routeStockPage(value.Stocks.ticker)}>
+            <Card.Body
+              key={value.id}
+              onClick={() => routeStockPage(value.Stocks.ticker)}
+            >
               <Row>
                 <Col xs={6} md={5} className="point">
                   <Card.Title>{value.Stocks.ticker}</Card.Title>
