@@ -15,7 +15,9 @@ import FundingHistory from "./pages/FundingHistory";
 import TopNavbar from "./components/TopNavbar";
 import { ModalContext } from "./helpers/ModalContext";
 
+
 function App() {
+
   // AuthContext Values
   const [authState, setAuthState] = useState({
     firstName: "",

@@ -30,6 +30,8 @@ const StyledTable = styled.table`
 `;
 
 const StockList = () => {
+  let navigate = useNavigate(); 
+
   const [stockList, setstockList] = useState([]);
   const tableHead = [
     "Ticker",

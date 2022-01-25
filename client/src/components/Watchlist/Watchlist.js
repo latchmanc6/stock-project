@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,6 +11,10 @@ import styled from "styled-components";
 
 const ItemWapper = styled.div`
   border-bottom: 1px solid rgb(230, 228, 227);
+
+  .point {
+    cursor: pointer;
+  }
 `
 const Container = styled.div`
   margin-bottom: 10px
@@ -17,6 +22,8 @@ const Container = styled.div`
 
 
 const Watchlist = () => {
+  let navigate = useNavigate(); 
+
   const [isWatch, setIsWatch] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
 
@@ -46,6 +53,11 @@ const Watchlist = () => {
       });
   };
 
+  const routeStockPage = (ticker) =>{ 
+    console.log('click')
+    navigate(`/trade/${ticker}`);
+  }
+
   return (
     <>
       {/* <Button
@@ -70,9 +82,9 @@ const Watchlist = () => {
       <CardRound>
         {watchlist.map((value) => (
           <ItemWapper>
-            <Card.Body key={value.id}>
+            <Card.Body key={value.id} onClick={() => routeStockPage(value.Stocks.ticker)}>
               <Row>
-                <Col xs={6} md={5}>
+                <Col xs={6} md={5} className="point">
                   <Card.Title>{value.Stocks.ticker}</Card.Title>
                   <Card.Subtitle className="text-muted">
                     {value.Stocks.companyName}
