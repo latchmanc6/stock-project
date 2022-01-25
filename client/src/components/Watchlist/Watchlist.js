@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import { Button, CardRound } from "components/Styled/style.js";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
+import styled from "styled-components";
 
 const Watchlist = () => {
   const [isWatch, setIsWatch] = useState(false);

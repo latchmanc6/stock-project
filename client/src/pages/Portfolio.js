@@ -1,13 +1,17 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import styled from "styled-components";
 
 import StockList from "components/Portfolio/StockList";
 import FundCard from "components/Portfolio/FundCard";
 import Watchlist from "components/Watchlist/Watchlist";
+
+const Container = styled.div`
+  margin: 80px;
+`;
 
 const Portfolio = () => {
   let navigate = useNavigate();
