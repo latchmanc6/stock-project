@@ -32,38 +32,20 @@ router.put("/address", validateToken, async (req, res) => {
   res.json({ address, postalCode });
 });
 
-// router.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
-//   const user = await Users.findOne({
-//     where: { email },
-//   });
+router.put("/password", validateToken, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { id } = req.user;
 
-//   if (!user) {
-//     res.json({ error: "Email doesn't exist" });
-//     return;
-//   }
+  const user = await Users.findOne({ where: { id } });
 
-//   bcrypt
-//     .compare(password, user.password)
-//     .then((match) => {
-//       if (!match) {
-//         res.json({ error: "Wrong email and password entered" });
+  bcrypt.compare(oldPassword, user.password).then((match) => {
+    if (!match) res.json({ error: "Wrong password entered" });
 
-//       } else {
-//         const accessToken = sign(
-//           { email: user.email, id: user.id },
-//           "importantsecret"
-//         );
-//         res.json({ token: accessToken, email, id: user.id });
-//       }
-//     })
-//     .catch((error) => {
-//       res.json({ error: error.messages });
-//     });
-// });
-
-// router.get("/token", validateToken, (req, res) => {
-//   res.json(req.user);
-// });
+    bcrypt.hash(newPassword, 10).then((hash) => {
+      Users.update({ password: hash }, { where: { id } });
+      res.json({ message: "SUCCESS" });
+    });
+  });
+});
 
 module.exports = router;

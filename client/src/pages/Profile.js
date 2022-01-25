@@ -21,9 +21,8 @@ const Container = styled.div`
 const Profile = () => {
   let navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
-  // const [showPhoneForm, setShowPhoneForm] = useState(false);
-  // const [showAddressForm, setShowAddressForm] = useState(false);
-  // const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [showForm, setShowForm] = useState({
     phone: false,
     address: false,
@@ -95,7 +94,28 @@ const Profile = () => {
             setShowForm({ ...showForm, address: false });
           }
         });
-    }
+    } else if (option === "password") {
+      axios
+        .put(
+          "http://localhost:3001/profile/password",
+          {
+            oldPassword, newPassword,
+          },
+          {
+            headers: {
+              accessToken: localStorage.getItem("accessToken"),
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.error) {
+            console.log(response.data.error);
+          } else {
+            console.log(response.data.message);
+            setShowForm({ ...showForm, password: false });
+          }
+        });
+      }
   };
 
   return (
@@ -116,6 +136,7 @@ const Profile = () => {
               </Col>
             </Row>
 
+            {/* Phone number */}
             <Row>
               {!showForm.phone ? (
                 <>
@@ -254,15 +275,75 @@ const Profile = () => {
 
           <Typography variant="h5">Security</Typography>
           <BoxRound>
+
             <Row>
               <Col>
                 <Typography variant="h7">Change password</Typography>
               </Col>
-              <Col>
-                <Button variant="primary" size="sm">
-                  Change password
-                </Button>
-              </Col>
+              {!showForm.password ? (
+                <>
+                  <Col>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => setShowForm({ ...showForm, password: true })}
+                    >
+                      Edit
+                    </Button>
+                  </Col>
+                </>
+              ) : (
+                <>
+                  <Col>
+
+                    {/* Current Password */}
+
+                    <Form.Group className="mb-3" controlId="formBasicOldPassword">
+                      <FloatingLabel label="Current password" className="mb-3">
+                        <Form.Control
+                          name="oldPassword"
+                          type="password"
+                          onChange={(e) => {
+                            setOldPassword(e.target.value);
+                          }}
+                          placeholder="Current password"
+                          style={{ width: "300px" }}
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
+
+                    {/* New Password */}
+
+                    <Form.Group className="mb-3" controlId="formBasicPhone">
+                      <FloatingLabel label="New password" className="mb-3">
+                        <Form.Control
+                          name="newPassword"
+                          type="password"
+                          onChange={(e) => {
+                            setNewPassword(e.target.value);
+                          }}
+                          placeholder="New password"
+                          style={{ width: "300px" }}
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
+
+                  </Col>
+                  <Col>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      onClick={() => editUserInfo("password")}
+                    >
+                      Submit
+                    </Button>
+                  </Col>
+                </>
+              )}
+            </Row>
+            <Row>
+              
+              
             </Row>
           </BoxRound>
         </Col>
