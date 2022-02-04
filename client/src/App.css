@@ -215,9 +215,8 @@ input:focus {
   display: static;
   position: absolute;
   width: 300px;
-  right: 19%;
   top: 50px;
-  overflow: hidden;
+  overflow: scroll;
   max-height: 200px;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -259,3 +258,9 @@ a {
 }
 
 /* ------------------------------------------ Search Bar END ------------------------------------------ */
+
+.loginInformationSection {
+  height: 45px;
+  text-align: center;
+  padding: 10px;
+}
