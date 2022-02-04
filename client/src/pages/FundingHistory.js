@@ -46,7 +46,6 @@ function FundingHistory() {
           }
         )
         .then((response) => {
-          console.log(response.data);
           setHistory(response.data);
         });
     }

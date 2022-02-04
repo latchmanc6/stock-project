@@ -101,7 +101,6 @@ const Profile = () => {
           headers: { accessToken: localStorage.getItem("accessToken") },
         })
         .then((response) => {
-          console.log(response.data);
           setUserInfo(response.data);
         });
     }
@@ -123,9 +122,7 @@ const Profile = () => {
         )
         .then((response) => {
           if (response.data.error) {
-            console.log(response.data.error);
           } else {
-            console.log(response.data);
             setUserInfo({ ...userInfo, phone: newPhone });
             setShowForm({ ...showForm, phone: false });
           }
@@ -146,9 +143,7 @@ const Profile = () => {
         )
         .then((response) => {
           if (response.data.error) {
-            console.log(response.data.error);
           } else {
-            console.log(response.data);
             setUserInfo({
               ...userInfo,
               address: newAddress.address,
@@ -173,9 +168,7 @@ const Profile = () => {
         )
         .then((response) => {
           if (response.data.error) {
-            console.log(response.data.error);
           } else {
-            console.log(response.data.message);
             setShowForm({ ...showForm, password: false });
           }
         });
@@ -363,16 +356,20 @@ const Profile = () => {
               {!showForm.password ? (
                 <>
                   <Col xs={6} md={2}>
-                    <Button
-                      className="passBtn"
-                      variant="primary"
-                      size="sm"
-                      onClick={() =>
-                        setShowForm({ ...showForm, password: true })
-                      }
-                    >
-                      Edit
-                    </Button>
+                    {userInfo.email === "chris@chris.com" ? (
+                      <p>Cannot Edit Password on Test Account</p>
+                    ) : (
+                      <Button
+                        className="passBtn"
+                        variant="primary"
+                        size="sm"
+                        onClick={() =>
+                          setShowForm({ ...showForm, password: true })
+                        }
+                      >
+                        Edit
+                      </Button>
+                    )}
                   </Col>
                 </>
               ) : (

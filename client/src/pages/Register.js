@@ -38,7 +38,6 @@ const Register = () => {
     axios
       .post("https://wetrade-stock-project.herokuapp.com/auth", values)
       .then((values) => {
-        console.log(values);
         navigate("/login");
       });
   };

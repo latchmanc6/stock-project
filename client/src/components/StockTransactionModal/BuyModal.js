@@ -52,7 +52,6 @@ function BuyModal(props) {
         order
       )
       .then((response) => {
-        console.log(response.data)
         props.setOrderStatus(true);
         props.setTotalCost(response.data.total)
       });

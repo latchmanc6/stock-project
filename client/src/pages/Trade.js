@@ -95,7 +95,6 @@ function Trade() {
         `https://wetrade-stock-project.herokuapp.com/funds/getUserInformation/${userId}`
       )
       .then((response) => {
-        console.log(response.data);
         setTransactionUserData(response.data);
       });
   };

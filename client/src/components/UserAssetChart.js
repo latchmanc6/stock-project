@@ -36,7 +36,6 @@ function UserAssetChart() {
         }
       )
       .then((response) => {
-        console.log(response.data);
         setChartData(response.data);
       })
       .then(() => {
@@ -73,7 +72,6 @@ function UserAssetChart() {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
-        console.log(response.data);
         setUserData(response.data);
       });
   };

@@ -17,7 +17,6 @@ const Portfolio = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    console.log("from portfolio");
     if (!localStorage.getItem("accessToken")) {
       navigate("/login");
     } 

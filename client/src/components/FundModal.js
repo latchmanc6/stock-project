@@ -36,13 +36,10 @@ const FundModal = ({ totalCash, setTotalCash }) => {
     const result = await stripe.createToken(card);
 
     if (result.error) {
-      console.log(result.error.message);
     } else {
       const depositResult = await stripeTokenHandler(result.token);
-      console.log(depositResult);
 
       if (depositResult.status !== "succeeded") {
-        console.log(depositResult.error.message);
       } else {
         setDepositStatusVal(true);
         if (totalCash)

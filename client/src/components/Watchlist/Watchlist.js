@@ -53,7 +53,6 @@ const Watchlist = () => {
   };
 
   const routeStockPage = (ticker) => {
-    console.log("click");
     navigate(`/trade/${ticker}`);
   };
 

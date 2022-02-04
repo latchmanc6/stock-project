@@ -55,13 +55,11 @@ const StockList = () => {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
-        console.log(response.data);
         setstockList(response.data);
       });
   }, []);
 
   const routeStockPage = (ticker) =>{ 
-    console.log('click')
     navigate(`/trade/${ticker}`);
   }
 

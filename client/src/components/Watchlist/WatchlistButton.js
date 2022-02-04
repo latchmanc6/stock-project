@@ -5,15 +5,14 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const WatchlistButton = ({ ticker, stockId }) => {
   const [isWatch, setIsWatch] = useState(false);
-  
+
   useEffect(() => {
     axios
       .get(`https://wetrade-stock-project.herokuapp.com/watchlist/${ticker}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
-        console.log(response.data);
-        setIsWatch(response.data.onWatchlist)
+        setIsWatch(response.data.onWatchlist);
       });
   }, []);
 
@@ -25,9 +24,8 @@ const WatchlistButton = ({ ticker, stockId }) => {
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )
       .then((response) => {
-        console.log(response.data.onWatch);
         setIsWatch(() => {
-          return response.data.onWatch ? true : false
+          return response.data.onWatch ? true : false;
         });
       });
   };
@@ -41,8 +39,7 @@ const WatchlistButton = ({ ticker, stockId }) => {
         }}
       >
         {!isWatch ? <AiOutlineStar /> : <AiFillStar />}
-        {!isWatch ? ' Add to watchlist' : ' Remove from watchlist'}
-
+        {!isWatch ? " Add to watchlist" : " Remove from watchlist"}
       </Button>
     </>
   );
