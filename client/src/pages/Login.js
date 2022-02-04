@@ -25,7 +25,6 @@ function Login() {
 
     axios.post("https://wetrade-stock-project.herokuapp.com/auth/login", data).then((response) => {
       if (response.data.error) {
-        console.log(response.data.error);
         // FIXME: display server side errors?
       } else {
         localStorage.setItem("accessToken", response.data.token);
@@ -42,6 +41,9 @@ function Login() {
 
   return (
     <Container>
+    <div className="loginInformationSection">
+      You can test the application by logging in with the following information: <b>Email: chris@chris.com | Password: Chris123</b>
+    </div>
       <BoxRound size="md">
         <Typography variant="h3">Log in</Typography>
 
