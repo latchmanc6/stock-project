@@ -32,7 +32,7 @@ app.use("/profile", profileRouter);
 
 // Scheduled tasks
 cron.schedule(
-  "0 30 23 * * *",
+  "0 30 23 * * 1-5",
   async () => {
     const allUsers = await Users.findAll();
     allUsers.forEach(async (user) => {
